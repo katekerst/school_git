@@ -6,13 +6,13 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 11:06:00 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/24 12:29:47 by siolive          ###   ########.fr       */
+/*   Updated: 2019/04/24 13:15:17 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static t_list		*ft_getlist(t_list **file, int fd)
+t_list				*ft_getlist(t_list **file, int fd)
 {
 	t_list			*temp;
 
@@ -30,34 +30,36 @@ static t_list		*ft_getlist(t_list **file, int fd)
 	return (temp);
 }
 
-static int			ft_strccpy(char **line, char *text, char symbol)
+int					ft_strccpy(char **line, char *text, char symbol)
 {
 	int				i;
 	int				j;
 	char			*temp;
+	char			*new;
 
 	i = 0;
 	j = 0;
 	temp = *line;
 	while (text[i] && text[i] != symbol)
 		i++;
-	if (!(*line = ft_strnew(i)))
+	if (!(new = ft_strnew(i)))
 		return (0);
 	while (text[j] && j < i)
 	{
-		*line[j] = text[j];
+		new[j] = text[j];
 		j++;
 	}
+	*line = new;
 	return (i);
 }
 
-static int			ft_read(int fd, char **copy)
+int					ft_read(int fd, char **copy)
 {
 	char			buffer[BUFF_SIZE + 1];
 	char			*temp;
 	int				ret;
 
-	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buffer, BUFF_SIZE)))
 	{
 		buffer[ret] = '\0';
 		temp = *copy;
@@ -74,27 +76,27 @@ int					get_next_line(const int fd, char **line)
 {
 	char			buffer[BUFF_SIZE + 1];
 	int				ret;
-	char			*copy;
 	static t_list	*file;
 	t_list			*node;
+	char			*temp;
 
 	if (!line || fd < 0 || BUFF_SIZE < 0 || read(fd, buffer, 0) < 0)
 		return (-1);
 	if (!(node = ft_getlist(&file, fd)))
 		return (-1);
-	copy = node->content;
-	ret = ft_read(fd, &copy);
-	node->content = copy;
-	if (ret == 0 && !*copy)
+	temp = node->content;
+	ret = ft_read(fd, &temp);
+	node->content = temp;
+	if (ret == 0 && !*temp)
 		return (0);
 	ret = ft_strccpy(line, node->content, '\n');
-	copy = node->content;
-	if (copy[ret] != '\0')
+	temp = node->content;
+	if (temp[ret] != '\0')
 	{
 		node->content = ft_strdup(&((node->content)[ret + 1]));
-		free(copy);
+		free(temp);
 	}
 	else
-		ft_strclr(copy);
+		temp[0] = '\0';
 	return (1);
 }
