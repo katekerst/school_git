@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 11:06:00 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/24 11:51:27 by siolive          ###   ########.fr       */
+/*   Updated: 2019/04/24 12:29:47 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static t_list		*ft_getlist(t_list **file, int fd)
 {
 	t_list			*temp;
 
+	if (!file)
+		return (NULL);
 	temp = *file;
-	while (temp != NULL)
+	while (temp)
 	{
 		if ((int)temp->content_size == fd)
 			return (temp);
@@ -28,10 +30,10 @@ static t_list		*ft_getlist(t_list **file, int fd)
 	return (temp);
 }
 
-size_t				ft_strccpy(char **line, char *text, char symbol)
+static int			ft_strccpy(char **line, char *text, char symbol)
 {
-	size_t			i;
-	size_t			j;
+	int				i;
+	int				j;
 	char			*temp;
 
 	i = 0;
@@ -39,7 +41,7 @@ size_t				ft_strccpy(char **line, char *text, char symbol)
 	temp = *line;
 	while (text[i] && text[i] != symbol)
 		i++;
-	if(!(*line = ft_strnew(i)))
+	if (!(*line = ft_strnew(i)))
 		return (0);
 	while (text[j] && j < i)
 	{
@@ -49,13 +51,13 @@ size_t				ft_strccpy(char **line, char *text, char symbol)
 	return (i);
 }
 
-size_t				ft_read(int	fd, char **copy)
+static int			ft_read(int fd, char **copy)
 {
 	char			buffer[BUFF_SIZE + 1];
 	char			*temp;
-	size_t			ret;
+	int				ret;
 
-	while ((ret = read(fd, buffer, BUFF_SIZE) > 0))
+	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
 		temp = *copy;
@@ -71,7 +73,7 @@ size_t				ft_read(int	fd, char **copy)
 int					get_next_line(const int fd, char **line)
 {
 	char			buffer[BUFF_SIZE + 1];
-	size_t			ret;
+	int				ret;
 	char			*copy;
 	static t_list	*file;
 	t_list			*node;
@@ -87,12 +89,12 @@ int					get_next_line(const int fd, char **line)
 		return (0);
 	ret = ft_strccpy(line, node->content, '\n');
 	copy = node->content;
-	if (copy[ret])
+	if (copy[ret] != '\0')
 	{
 		node->content = ft_strdup(&((node->content)[ret + 1]));
 		free(copy);
 	}
 	else
-		ft_strclr(node->content);
+		ft_strclr(copy);
 	return (1);
 }
