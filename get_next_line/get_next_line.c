@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 11:06:00 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/24 14:32:18 by siolive          ###   ########.fr       */
+/*   Updated: 2019/04/27 14:56:42 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list				*ft_getlist(t_list **file, int fd)
 	if (!file)
 		return (NULL);
 	new = *file;
-	while (new)
+	while (new != NULL)
 	{
 		if ((int)new->content_size == fd)
 			return (new);
@@ -36,7 +36,7 @@ int					ft_read(int fd, char **copy)
 	char			*temp;
 	int				ret;
 
-	while ((ret = read(fd, buffer, BUFF_SIZE)))
+	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
 		temp = *copy;
@@ -82,21 +82,19 @@ int					get_next_line(const int fd, char **line)
 
 	if (!line || fd < 0 || BUFF_SIZE < 0 || read(fd, buffer, 0) < 0)
 		return (-1);
-	if (!(node = ft_getlist(&file, fd)))
+	if ((node = ft_getlist(&file, fd)) == NULL)
 		return (-1);
-	temp = node->content;
+	temp = (char *)node->content;
 	ret = ft_read(fd, &temp);
 	node->content = temp;
-	if (ret == 0 && !*temp)
+	if (ret == 0 && *temp == 0)
 		return (0);
-	ret = ft_strccpy(line, node->content, '\n', -1);
-	temp = node->content;
-	if (temp[ret])
-	{
-		node->content = ft_strdup(&((node->content)[ret + 1]));
-		free(temp);
-	}
+	ret = ft_strccpy(line, (char *)node->content, '\n', -1);
+	temp = (char *)node->content;
+	if (temp[ret] == '\0')
+		ft_strclr(node->content);
 	else
-		ft_strclr(temp);
+		node->content = ft_strdup(&(node->content[ret + 1]));
+	free(temp);
 	return (1);
 }
