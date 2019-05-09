@@ -15,9 +15,21 @@
 #include "libft/libft.h"
 #include "fillit.h"
 
-t_list		*ft_newfigure(t_list *figure, t_tetras *tetramino)
+t_list		*ft_newfigure(t_list **figure, t_tetras *tetramino)
 {
-	return (figure);
+	t_list	*begin;
+// для первой фигуры (в случае, если список пустой)
+	if (!*figure)
+		begin = ft_lstnew(tetramino, sizeof(t_tetras));
+// для остальных случаев - доходим до последнего элемента и добавляем новый
+	else
+	{
+		begin = *figure;
+		while (*figure->next)
+			*figure = *figure->next;
+		figure->next = ft_lstnew(tetramino, sizeof(t_tetras));
+	}
+	return (begin);
 }
 
 t_tetras	*ft_newtetra(char *buffer, char let)
