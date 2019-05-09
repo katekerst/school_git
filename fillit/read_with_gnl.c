@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft.h"
+#include "libft/libft.h"
 #include "fillit.h"
 
 // являются ли полученные символы в строках корректными фигурами
@@ -46,7 +46,7 @@ int     ft_check_block(char *buffer)
     count = 0;
     while (buffer[i])
     {
-        if ((buffer[i] == '#' || buffer[i] == '.')
+        if (buffer[i] == '#' || buffer[i] == '.')
         {
             if (buffer[i] == '#')
                 count++;
@@ -59,7 +59,7 @@ int     ft_check_block(char *buffer)
         else
             return (0);
     }
-    if (!(ft_check_figure(buffer))
+    if (!(ft_check_figure(buffer)))
         return (0);
     return (1);
 }
@@ -75,15 +75,13 @@ t_list  *ft_read_tetraminos(fd)
 
     if (!(buffer = (char *)malloc(sizeof(char) * 21)))
         return (NULL);
-    count = 0;
     letter = 'A';
     while (get_next_line(fd, *line) >= 0)
     {
         if (!(*line))
             line = '\n';
         buffer = ft_strjoin(buffer, line);
-    }
-    if (ft_check_block(buffer) && tetramino = ft_newtetra(buffer, letter))
+        if ((ft_check_block(buffer)) && (tetramino = ft_newtetra(buffer, letter)))
         {
             ft_lstnew(tetramino, sizeof(t_tetras));
             ft_newfigure(&figures, tetramino);

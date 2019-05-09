@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/09 13:34:04 by siolive           #+#    #+#             */
+/*   Updated: 2019/05/09 13:34:04 by siolive          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h>
-#include "libft.h"
+#include <stdlib.h>
+#include <fcntl.h>
+#include "libft/libft.h"
 #include "fillit.h"
 
 int main(int argc, char **argv)
