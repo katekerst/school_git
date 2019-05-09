@@ -6,7 +6,7 @@
 /*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 15:06:28 by siolive           #+#    #+#             */
-/*   Updated: 2019/05/09 15:10:49 by siolive          ###   ########.fr       */
+/*   Updated: 2019/05/09 15:13:19 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_tetras	*ft_newtetra(char *buffer, char let)
 	int			count;
 
 	i = 0;
-	j = 1;
+	j = 0;
 	count = 0;
 	tetramino = (t_tetras *)malloc(sizeof(t_tetras));
 // сохраняем букву в элемент структуры 
@@ -45,7 +45,7 @@ t_tetras	*ft_newtetra(char *buffer, char let)
 		if (buffer[i] == '#')
 		{
 // координата x - это разница между текущим индексом и индексом первого квадрата - количество строк (в которой 5 элементов)
-			tetramino->x[j++] = i - count - k;
+			tetramino->x[++j] = i - count - k;
 // координата y - это разница между строками (номер строки, на которой находимся определяется делением на 5)
 			tetramino->y[j] = i / 5 - k / 5;
 		}
