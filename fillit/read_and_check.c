@@ -15,9 +15,22 @@
 #include "libft/libft.h"
 #include "fillit.h"
 
-t_list		*ft_newfigure(t_list *figure, t_tetras *tetramino)
+t_list		*ft_newfigure(t_list **figure, t_tetras *tetramino)
 {
-	return (figure);
+	t_list	*current;
+
+// для первой фигуры (в случае, если список пустой)
+	if (!*figure)
+		*figure = ft_lstnew(tetramino, sizeof(t_tetras));
+// для остальных случаев - доходим до последнего элемента и добавляем новый
+	else
+	{
+		current = *figure;
+		while (current && current->next != NULL)
+			current = current->next;
+		current->next = ft_lstnew(tetramino, sizeof(t_tetras));
+	}
+	return (*figure);
 }
 
 t_tetras	*ft_newtetra(char *buffer, char let)
@@ -32,12 +45,13 @@ t_tetras	*ft_newtetra(char *buffer, char let)
 	j = 0;
 	count = 0;
 	tetramino = (t_tetras *)malloc(sizeof(t_tetras));
-// сохраняем букву в элемент структуры 
+// сохраняем букву и порядковый номер в элемент структуры 
 	tetramino->letter = let;
+	tetramino->num = (let - 65);
 // находим первый квадрат тетрамино
 	while (buffer[i] != '#')
 		i++;
-// запоминаем индекс первого символа '#'       
+// запоминаем индекс первого символа '#'      
 	k = i;
 // проходим всю строку и ищем в ней следующие квадраты    
 	while (++i <= 18)
@@ -45,9 +59,9 @@ t_tetras	*ft_newtetra(char *buffer, char let)
 		if (buffer[i] == '#')
 		{
 // координата x - это разница между текущим индексом и индексом первого квадрата - количество строк (в которой 5 элементов)
-			tetramino->x[++j] = i - count - k;
+			tetramino->x[j] = i - count - k;
 // координата y - это разница между строками (номер строки, на которой находимся определяется делением на 5)
-			tetramino->y[j] = i / 5 - k / 5;
+			tetramino->y[j++] = i / 5 - k / 5;
 		}
 // для определения количества строк в дальнейшем при переходе на следующую строку прибавляем к переменной по 5        
 		if (buffer[i] == '\n')
@@ -80,9 +94,9 @@ int			ft_check_figure(char *buffer)
 		}
 		i++;
 	}
-	if (count != 6 || count != 8)
-		return (0);
-	return (1);
+	if (count == 6 || count == 8)
+		return (1);
+	return (0);
 }
 
 // проверка символов и расположения \n'ов
@@ -115,7 +129,10 @@ int			ft_check_block(char *buffer, int ret)
 		return (0);
 // проверка корректного расположения символов относительно друг друга
 	if (!(ft_check_figure(buffer)))
-		return (0);
+	{
+		printf("checking buffer is - %d\n", ft_check_figure(buffer));
+			return (0);
+	}
 	return (1);
 }
 
@@ -129,6 +146,7 @@ t_list		*ft_read_tetraminos(int fd)
 	t_tetras	*tetramino;
 
 	letter = 'A';
+	figures = NULL;
 // читаем в буфер по одному блоку (все - по 21 символу, кроме последнего)
 // в последнем - 20, т.к после него нет \n
 	while ((ret = (read(fd, buffer, 21) >= 20)))
@@ -137,17 +155,16 @@ t_list		*ft_read_tetraminos(int fd)
 		if ((ft_check_block(buffer, ret)) && (tetramino = ft_newtetra(buffer, letter)))
 		{
 // добавляем новую фигуру в связный список в порядке получения 
-			ft_lstnew(tetramino, sizeof(t_tetras));
-			ft_newfigure(&figures, tetramino);
+			printf("after creation in reader letter is - %c\n", tetramino->letter);
+			figures = ft_newfigure(&figures, tetramino);
+			free(tetramino);
 		}
 		else
 		{
-			free(buffer);
-			free_figures(figures);
+			ft_free_tetraminos(figures);
 			return (NULL);
 		}
 		letter++;
 	}
-	free(buffer);
 	return (figures);
 }
