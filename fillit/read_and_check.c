@@ -17,6 +17,7 @@
 
 t_list		*ft_newfigure(t_list **figure, t_tetras *tetramino)
 {
+<<<<<<< HEAD
 	t_list	*current;
 
 // для первой фигуры (в случае, если список пустой)
@@ -31,6 +32,21 @@ t_list		*ft_newfigure(t_list **figure, t_tetras *tetramino)
 		current->next = ft_lstnew(tetramino, sizeof(t_tetras));
 	}
 	return (*figure);
+=======
+	t_list	*begin;
+// для первой фигуры (в случае, если список пустой)
+	if (!*figure)
+		begin = ft_lstnew(tetramino, sizeof(t_tetras));
+// для остальных случаев - доходим до последнего элемента и добавляем новый
+	else
+	{
+		begin = *figure;
+		while (*figure->next)
+			*figure = *figure->next;
+		figure->next = ft_lstnew(tetramino, sizeof(t_tetras));
+	}
+	return (begin);
+>>>>>>> c2cf2b04c951b252c4e590157c5c99ad5c8d7cd7
 }
 
 t_tetras	*ft_newtetra(char *buffer, char let)
