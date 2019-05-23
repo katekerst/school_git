@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/09 12:50:37 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/09 16:39:35 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/07 11:09:39 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/16 11:42:51 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int		ft_isprint(int c)
 {
-	if (c > 31 && c < 127)
+	if (c >= ' ' && c <= '~')
 		return (1);
-	else
-		return (0);
+	return (0);
 }

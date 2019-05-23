@@ -3,54 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 16:17:37 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/15 14:43:50 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/25 13:21:33 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/26 12:39:12 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_countsigns(int n)
+static int				rang_bang(int n)
 {
-	int		count;
+	int					i;
+	unsigned int		nb;
 
-	count = 0;
-	if (n <= 0)
+	nb = 0;
+	i = 1;
+	if (n < 0)
 	{
-		if (n == -2147483648)
-			return (11);
-		n *= -1;
-		count++;
+		i++;
+		nb = -1 * n;
 	}
-	while (n > 0)
+	else
+		nb = n;
+	while (nb / 10 > 0)
 	{
-		n /= 10;
-		count++;
+		i++;
+		nb = nb / 10;
 	}
-	return (count);
+	return (i);
 }
 
-char		*ft_itoa(int n)
+static char				*while_plus(char *str, int sgn, int i, unsigned int nb)
 {
-	char	*str;
-	int		length;
-	int		t;
+	int q;
 
-	length = ft_countsigns(n);
-	if (!(str = (char *)malloc(sizeof(char) * (length + 1))))
-		return (NULL);
-	str[length] = '\0';
-	length--;
-	t = n;
-	while (length >= 0)
+	q = i + sgn;
+	while (q-- > 0)
 	{
-		str[length] = ABS(t % 10) + '0';
-		t /= 10;
-		length--;
+		str[i] = nb % 10 + 48;
+		nb = nb / 10;
+		i--;
 	}
+	return (str);
+}
+
+static char				*while_minus(char *str, int sgn, int i, unsigned int nb)
+{
+	int q;
+
+	q = i + sgn;
+	while (--q > 0)
+	{
+		str[i] = nb % 10 + 48;
+		nb = nb / 10;
+		i--;
+	}
+	return (str);
+}
+
+char					*ft_itoa(int n)
+{
+	char				*str;
+	int					i;
+	unsigned int		nb;
+
+	i = rang_bang(n);
+	nb = n;
+	str = (char *)malloc((i + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	str[i] = '\0';
 	if (n < 0)
+	{
 		str[0] = '-';
+		nb = n * -1;
+		while_minus(str, 1, (i - 1), nb);
+	}
+	else
+		while_plus(str, 1, (i - 1), nb);
 	return (str);
 }

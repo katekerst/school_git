@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 15:30:47 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/13 13:15:17 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/07 15:13:33 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/27 15:06:46 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	unsigned int nb;
+	unsigned int	nb;
 
-	if (n < 0)
+	nb = 0;
+	if (n >= -2147483648 && n <= 2147483647)
 	{
-		nb = (unsigned int)(n * -1);
-		ft_putchar_fd('-', fd);
+		if (n < 0)
+		{
+			ft_putchar_fd('-', fd);
+			nb = -1 * n;
+		}
+		else
+			nb = n;
+		if (nb > 9)
+		{
+			ft_putnbr_fd(nb / 10, fd);
+			ft_putnbr_fd(nb % 10, fd);
+		}
+		else
+			ft_putchar_fd(('0' + nb), fd);
 	}
-	else
-		nb = (unsigned int)n;
-	if (nb >= 10)
-	{
-		ft_putnbr_fd(nb / 10, fd);
-		ft_putnbr_fd(nb % 10, fd);
-	}
-	else
-		ft_putchar_fd(nb + 48, fd);
 }

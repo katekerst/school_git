@@ -3,38 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/13 12:27:34 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/13 13:30:04 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/22 12:36:12 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/28 13:26:18 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*current;
-	t_list	*new;
-	t_list	*begin_new;
+	t_list	*new_lst;
+	t_list	*temp;
 
-	if (lst && f)
+	new_lst = NULL;
+	if (lst && (*f))
 	{
-		new = (t_list *)malloc(sizeof(t_list));
-		if (new == NULL)
-			return (NULL);
-		new = f(lst);
-		begin_new = new;
-		current = lst;
-		while (current->next)
+		temp = lst;
+		new_lst = ft_lstnew(temp->content, temp->content_size);
+		if (!(new_lst))
 		{
-			current = current->next;
-			new->next = f(current);
-			if (new->next == NULL)
-				return (NULL);
-			new = new->next;
+			ft_destroy_list(&new_lst);
+			return (NULL);
 		}
-		return (begin_new);
+		new_lst = f(new_lst);
+		if (temp->next)
+			new_lst->next = ft_lstmap(temp->next, f);
 	}
-	return (NULL);
+	else
+		return (NULL);
+	return (new_lst);
 }

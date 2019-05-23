@@ -3,40 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 11:51:51 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/15 14:58:37 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/08 13:01:04 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/23 15:41:57 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strtrim(char const *s)
+char			*ft_strtrim(char const *s)
 {
-	int		l;
-	char	*str;
-	char	*copy;
-	int		i;
+	char	*result;
+	size_t	i;
+	size_t	start;
+	size_t	finish;
 
 	if (!s)
 		return (NULL);
-	while (*s == ' ' || *s == '\n' || *s == '\t')
-		s++;
-	str = (char *)s;
-	l = (int)ft_strlen(str);
-	while (str[l - 1] == ' ' || str[l - 1] == '\n' || str[l - 1] == '\t')
-		l--;
-	if (l <= 0)
-		l = 0;
-	if (!(copy = (char *)malloc(sizeof(char) * (l + 1))))
-		return (NULL);
 	i = 0;
-	while (i < l)
+	start = 0;
+	finish = ft_strlen(s);
+	while (ft_isblank(s[start]) || s[start] == '\n')
+		start++;
+	while (finish && (ft_isblank(s[finish - 1]) || s[finish - 1] == '\n'))
+		finish--;
+	if ((result = ft_strnew((finish > start) ? (finish - start) : 0)))
 	{
-		copy[i++] = *str;
-		str++;
+		while (start < finish)
+			result[i++] = s[start++];
+		result[i] = '\0';
 	}
-	copy[i] = 0;
-	return (copy);
+	return (result);
 }

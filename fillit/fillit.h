@@ -5,29 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/09 13:34:48 by siolive           #+#    #+#             */
-/*   Updated: 2019/05/10 12:02:01 by siolive          ###   ########.fr       */
+/*   Created: 2019/05/11 15:13:10 by gbellege          #+#    #+#             */
+/*   Updated: 2019/05/16 13:09:22 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#ifndef FILLIT_H
+# define FILLIT_H
+# include "libft/libft.h"
 
-typedef struct  s_tetras
+typedef struct			s_tetra
 {
-    int     num;
-    int     x[3];
-    int     y[3];
-    char    letter;
-}               t_tetras;
+	int					num;
+	int					x[4];
+	int					y[4];
+	char				letter;
+	struct s_tetra		*next;
+}						t_tetra;
 
-typedef struct s_square
+typedef struct			s_map
 {
-    /*data*/
-}               t_square;
+	short int			tetra_qt;
+	short int			map_size;
+}						t_map;
 
-t_list  *ft_read_tetraminos(int fd);
-int     ft_check_block(char *buffer, int ret);
-int     ft_check_figure(char *buffer);
-t_tetras    *ft_newtetra(char *buffer, char let);
-t_list      *ft_newfigure(t_list **figure, t_tetras *tetramino);
-void    ft_free_tetraminos(t_list   *tetraminos);
+char					**draw_map(char **map, short int size);
+short int				set_min_size(short int tetra_qt);
+void					get_solution(t_tetra *tetramino, t_map *map_op);
+t_tetra					*ft_read_tetraminos(int fd, t_tetra *tetramino);
+int						ft_check_block(char *buffer, int ret);
+int						ft_check_figure(char *buffer);
+t_tetra					*ft_newtetra(char *buf, char let, t_tetra *tetramino);
+t_tetra					*ft_newfigure(t_tetra **figure, t_tetra *tetramino);
+void					ft_free_tetraminos(t_tetra *tetraminos);
+void					ft_free_tetraminos_fin(t_tetra *tetraminos);
+void					finish(void);
+char					**fillit(t_tetra *tetramino, t_map *map_op, char **map);
+void					check_open(int fd);
+void					check_close(int fd);
+t_map					*ft_create_map_option(t_tetra **tetramino);
+t_tetra					*ft_create_tetra(t_tetra *tetramino, char *buffer);
+void					ft_freearray(char **array);
+void					ft_free_tetraminos_fin(t_tetra *tetraminos);
+
+#endif

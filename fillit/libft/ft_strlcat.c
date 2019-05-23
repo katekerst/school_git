@@ -3,35 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 15:58:58 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/07 16:59:41 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/05 17:25:54 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/18 11:17:13 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dest, const char *source, size_t nb)
 {
-	size_t j;
-	size_t i;
-	size_t result;
+	size_t	l_dest;
+	size_t	l_source;
 
-	result = 0;
-	i = ft_strlen(dst);
-	j = ft_strlen(src);
-	if (size <= i)
-		result = size + j;
-	else
-		result = i + j;
-	j = 0;
-	while (src[j] != '\0' && (i + 1) < size)
+	l_dest = ft_strlen(dest);
+	l_source = ft_strlen(source);
+	if (nb < (l_dest + 1) || nb == 0)
 	{
-		dst[i] = src[j];
-		i++;
-		j++;
+		if (nb)
+			ft_strncat(dest, source, 0);
+		return (l_source + nb);
 	}
-	dst[i] = '\0';
-	return (result);
+	else
+		ft_strncat(dest, source, nb - l_dest - 1);
+	return (l_dest + l_source);
 }

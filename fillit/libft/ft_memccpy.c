@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/07 11:35:16 by siolive           #+#    #+#             */
-/*   Updated: 2019/04/15 10:46:05 by siolive          ###   ########.fr       */
+/*   Created: 2019/04/07 12:46:19 by gbellege          #+#    #+#             */
+/*   Updated: 2019/04/27 14:15:19 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dest, const void *source, int c, size_t nb)
 {
-	unsigned char		*new_dst;
-	unsigned char		*new_src;
-	size_t				i;
+	unsigned char	sym;
+	unsigned char	*d;
+	unsigned char	*s;
 
-	i = 0;
-	new_dst = (unsigned char *)dst;
-	new_src = (unsigned char *)src;
-	while (i < n)
+	sym = (unsigned char)c;
+	d = (unsigned char *)dest;
+	s = (unsigned char *)source;
+	while (nb--)
 	{
-		new_dst[i] = new_src[i];
-		if (new_src[i] == (unsigned char)c)
-			return ((void *)(dst + (i + 1)));
-		i++;
+		*d++ = *s++;
+		if (*(d - 1) == sym)
+			return (d);
 	}
 	return (NULL);
 }
