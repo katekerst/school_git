@@ -1,0 +1,2 @@
+ifconfig en0 | grep broadcast | rev | cut -c1-14 | rev
+arp -a

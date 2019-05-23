@@ -1,0 +1,3 @@
+The etc/ directory contains sysytem configuration files.
+The setting file resolv.conf in this directory contains the adresses of the name servers which system has access to.
+etc/resolv.conf
