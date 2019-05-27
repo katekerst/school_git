@@ -1,0 +1,4 @@
+Graphic session: start VM and enter a password when asked.
+SSH: find out IP address of host (nslookup localhost) and enter command:
+ssh siolive@127.0.0.1(IP) 
+su -in Debian terminal. Enter password when asked.
