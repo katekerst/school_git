@@ -1,0 +1,6 @@
+#!/bin/bash
+USER=$1
+pgrep -u $USER | while read PID;
+do sudo kill -9 $USER;
+done
+sudo userdel -f $USER
