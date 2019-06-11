@@ -1,0 +1,185 @@
+VM part:
+1. При создании виртуальной машины - размер жесткого диска 8Г.
+
+2. При установке системы (Ubuntu 4ever!) - установка только основы системы! Без доп.опций. Сверху - только grub.
+
+3. sudo apt update && sudo apt upgrade
+
+Network Part:
+1 и 2.
+Зайти под рутом или пользователем sudo
+1. sudo adduser new
+2. sudo adduser new sudo
+3. sudo reboot
+
+3.
+В VirtualBox - Инструменты -> Свойства. DHCP-сервер - снять галочку "включить".
+
+4. 
+1. В настройках Ubuntu VB -> Сеть -> 
+Адаптер 1 - NAT
+Адаптер 2 - Виртуальный адаптер хоста
+2. (?) sudo netplan generate
+3. ip -a (перечень интерфейсов)
+4. sudo vi /etc/netplan/01-netcfg.yaml
+
+network:
+		version: 2
+		renderer: networkd
+		ethernets:
+				enp0s3:
+						addresses: []
+						dhcp4: yes
+				enp0s8:
+						addresses: [192.168.56.2/30]
+						dhcp4: no
+						dhcp6: no
+						nameservers:
+								addresses: [1.1.1.1,1.0.0.1]
+
+5.
+Настройка SSH:
+1. ssh-keygen в new
+2. vi /etc/ssh/sshd_config
+3. изменить:
+
+    Port 2222
+    PasswordAuthentification yes
+    PubkeyAuthentication yes
+    PermitRootLogin yes
+
+Раскомменитровать указанные строки!
+3. sudo service ssh restart
+ssh-copy-id -i ~/.ssh/id_rsa.pub -p 2222 shad@ubuntu1
+4. vi /etc/ssh/sshd_config
+
+    PermitRootLogin no
+    PasswordAuthentification no
+5. ssh -p 2222 shad@ubuntu1 - ввести ключ
+
+
+7.
+Настройка DOS защиты
+https://itstuff.info/linux_unix/configuretion-fail2ban-and-nginx-to-protect-from-dos/
+sudo apt install iptables
+Установка и настройка Nginx
+1. sudo apt-get install -y nginx
+3. sudo chmod 777 /etc/nginx/nginx.conf
+4. vi /etc/nginx/nginx.conf
+    server_token off;
+    ...
+    default_type application/octet-stream;
+    + limit_req_zone $binary_remote_addr zone=one:5m rate=1r/s;
+    в блоке server:
+    limit_req   zone=one  burst=1 nodelay;
+Установка и настройка Fail2ban
+1. sudo apt install fail2ban
+2. sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+3. Создать файл /etc/fail2ban/filter.d/nginx-req-limit.conf:
+
+[Definition]
+failregex = ^\s*\[error\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "[^"]+", client: <HOST>
+ignoreregex =
+4. vi /etc/fail2ban/jail.local
+в конец:
+[nginx-req-limit]
+
+enabled = true
+filter = nginx-req-limit
+action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
+logpath = /var/log/nginx/*error.log
+findtime = 600
+bantime = 7200
+maxretry = 10
+5. sudo service fail2ban (re)start
+6. проверка - sudo tail -f /var/log/fail2ban.log
+
+6 и 8.
+Настройка защиты от сканирования открытых портов, фаэрвола и почтовых отправлений:
+1. sudo apt install ufw
+2. vi /etc/default/ufw
+Заменить IPV6=yes на IPV6=no
+3. sudo ufw enable
+4. sudo ufw default deny incoming
+5. sudo ufw default allow outgoing
+6. sudo ufw allow 2222/tcp
+7. sudo ufw allow 443/tcp
+8. sudo ufw allow sendmail
+9. sudo ufw logging low
+10. sudo ufw reload
+Почтовые уведомления:
+1. sudo apt install sendmail
+2. vi /etc/fail2ban/jail.local
+destmail = root@ubuntu1
+sender = fail2ban@ubuntu1
+mta = sendmail
+
+action = %(action_mwl)s
+
+НЕТ(в конце:
+[sendmail]
+enabled = true
+filter = sendmail
+action   = iptables-multiport[name=sendmail, port="pop3,imap,smtp,pop3s,imaps,smtps", protocol=tcp]
+           sendmail-whois[name=sendmail, dest=root@ubuntu1]
+ignoreregex =)
+
+НЕТ (создать файл sendmail.conf в /etc/fail2ban/filter.d:
+[Definition]
+
+failregex = \[<HOST>\] .*to MTA
+#            \[<HOST>\] \(may be forged\)
+            \[<HOST>\], reject.*\.\.\. Relaying denied
+            (User unknown)\n* \[<HOST>\]
+            badlogin: .* \[<HOST>\] plaintext .* SASL
+
+ignoreregex =)
+
+Создание скрипта для обновления пакетов при запуске системы и в 4 утра
+9.
+Доступ к crontabs только от рута. Сначала - sudo passwd root - ввести новый пароль.
+Зайти под рутом. 
+
+1. сrontab -e
+0 4 * * 1 /home/shad/update_script.sh
+@reboot /home/shad/update_script.sh
+(возникли проблемы с apt:
+sudo fuser -v /var/lib/dpkg/lock
+sudo fuser -vki /var/lib/dpkg/lock)
+Сам скрипт:
+------
+#!/bin/bash
+date
+sudo apt-get update >> var/log/update_script.log 2>%1
+sudo apt-get -y upgrade >> var/log/update_script.log 2>%1
+------
+
+10.
+Проверка изменений в crontab
+1. Скрипт (/root/cron_script.sh)
+----
+#!/bin/bash
+ALERT=root@ubuntu1
+if [[ $(($(date +%s) - $(date +%s -r /var/spool/cron/crontabs))) -lt 86400 ]]
+then
+	echo "Crontab file has been modified" | sudo /usr/sbin/sendmail $ALERT
+fi
+---
+ИЛИ
+---
+CRONDIR=/var/spool/cron/crontabs
+CKFILE=/tmp/last.crontab.check
+ALERT=someuser@your.alerthost
+if [ -f $CKFILE ]
+then
+    find $CRONDIR -type f -newer $CKFILE | while read tabfile
+    do
+       echo "Crontab file for user $(basename $tabfile) has changed" | mail -s "Crontab changed" $ALERT
+    done
+fi
+touch $CKFILE
+2. crontab -e (root)
+@reboot bash /root/cron_script.sh
+0 0 * * * bash /root/cron_script.sh
+
+Остановить все сервисы, которые не используются.
