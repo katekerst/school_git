@@ -181,5 +181,31 @@ touch $CKFILE
 2. crontab -e (root)
 @reboot bash /root/cron_script.sh
 0 0 * * * bash /root/cron_script.sh
+Ч
+«ащита от DOS атак
+https://www.oslogic.ru/knowledge/420/prostaya-zashhita-ot-dos-atak/
 
+sudo apt-get install libapache2-mod-evasive
+—оздаем файл настроек†mod-evasive††/etc/apache2/mods-available/mod-evasive.conf†со следующим содержимым:
+
+<IfModule mod_evasive20.c>
+DOSHashTableSize 4096
+DOSPageCount 5
+DOSSiteCount 50
+DOSPageInterval 1
+DOSSiteInterval 1
+DOSBlockingPeriod 300
+DOSEmailNotify admin@site.com
+</IfModule>
+
+sudo a2enmod evasive
+sudo service apache2 restart
+
+ѕроверка:
+sudo vi /usr/share/doc/libapache2-mod-evasive/examples/test.pl
+print $SOCKET УGET /?$_ HTTP/1.0\n\nФ;
+Re-worked line:
+print $SOCKET УGET /?$_ HTTP/1.0\r\nHost: 127.0.0.1\r\n\r\nФ;
+Sudo perl test.pl
+Ч
 ќстановить все сервисы, которые не используютс€.
