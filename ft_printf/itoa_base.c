@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/20 14:28:46 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/20 14:32:57 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*itoa_base(int value, int base)
 	int				i;
 	unsigned int	tmp;
 
+	sign = 0;
 	i = ft_count(value, base);
 	if (value < 0 && base == 10)
 		sign = -1;
