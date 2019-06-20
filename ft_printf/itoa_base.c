@@ -1,17 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   itoa_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/20 14:06:00 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/20 14:22:00 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+
+int     ft_count(int value, int base)
+{
+    int     i;
+    unsigned int tmp;
+
+    i = 0;
+    if (value < 0 && base == 10)
+        i++;
+    tmp = (unsigned int)value;
+    while (tmp > 0)
+    {
+        i++;
+        tmp /= base; 
+    }
+    return (i);
+}
 
 char    *itoa_base(int value, int base)
 {
@@ -20,18 +37,10 @@ char    *itoa_base(int value, int base)
     int     i;
     unsigned int     tmp;
 
-    i = 0;
-    if (value < 0 && base == 10)
-    {    
+    i = ft_count(value, base);
+    if (value < 0 && base == 10)  
         sign = -1;
-        i++;
-    }
     tmp = (unsigned int)value;
-    while (tmp > 0)
-    {
-        i++;
-        tmp /= base; 
-    }
     string = (char *)malloc(sizeof(char) * (i + 1));
     string[i] = '\0';
     tmp = (unsigned int)value;
@@ -54,7 +63,7 @@ int main(void)
     char    *string;
     int     base;
 
-    i = -81235;
+    i = 812323;
     base = 16;
     string = itoa_base(i, base);
     printf("itoa_base is %s\n", string);
