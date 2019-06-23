@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/23 12:06:11 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/23 12:07:18 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int		ft_count(int value, int base)
 		value *= -1;
 		tmp = value;
 	}
-	printf ("tmp in count is %d\n", tmp);
 	while (tmp > 0)
 	{
 		i++;
@@ -58,7 +57,6 @@ char	*itoa_base(int value, int base)
 
 	sign = 0;
 	i = ft_count(value, base);
-	printf ("i is %d\n", i);
 	if (value < 0 && base == 10)
 	{
 		sign = -1;
@@ -67,7 +65,6 @@ char	*itoa_base(int value, int base)
 	}
 	else
 		tmp = (unsigned int)value;
-	printf ("tmp is %d\n", tmp);
 	string = ft_string(sign, i);
 	while (i-- + sign)
 	{
