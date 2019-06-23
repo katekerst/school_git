@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/23 14:54:40 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/23 15:00:38 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,15 @@ void	ft_play_with_floats(double n, int precision)
 	if (sign == 1)
 		string[i++] = '-';
 	ft_left_part(&string, &n, &i, decs);
-	ft_right_part(&string, n, &i, precision);
+	if (precision != 0)
+		ft_right_part(&string, n, &i, precision);
+	else 
+		string[i] = '\0';
 	printf ("string is %s\n", string);
 }
 
 int main (void)
 {
-	ft_play_with_floats(-123453.9244, 6);
+	ft_play_with_floats(123453.9244, 10);
 	return (0);
 }
