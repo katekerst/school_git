@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/23 11:53:46 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/23 12:06:11 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int		ft_count(int value, int base)
 	i = 0;
 	if (value < 0 && base == 10)
 		i++;
-	if (base != 10)
-		tmp = (unsigned int)value;
+	tmp = (unsigned int)value;
 	if (base == 10 && value < 0)
 	{
 		value *= -1;
 		tmp = value;
 	}
+	printf ("tmp in count is %d\n", tmp);
 	while (tmp > 0)
 	{
 		i++;
@@ -58,13 +58,16 @@ char	*itoa_base(int value, int base)
 
 	sign = 0;
 	i = ft_count(value, base);
+	printf ("i is %d\n", i);
 	if (value < 0 && base == 10)
 	{
 		sign = -1;
-		tmp = value * (-1);
+		value *= -1;
+		tmp = value;
 	}
-	if (base != 10)
+	else
 		tmp = (unsigned int)value;
+	printf ("tmp is %d\n", tmp);
 	string = ft_string(sign, i);
 	while (i-- + sign)
 	{
@@ -84,9 +87,9 @@ int		main(void)
 	int				base;
 
 	i = 812323;
-	base = 16;
+	base = 10;
 	string = itoa_base(i, base);
 	printf("itoa_base is %s\n", string);
-	printf("printf is %x", i);
+	printf("printf is %d", i);
 	return (0);
 }
