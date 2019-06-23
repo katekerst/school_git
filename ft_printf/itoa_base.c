@@ -6,12 +6,25 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/20 14:32:57 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/23 11:53:46 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+
+char	*ft_string(int sign, int i)
+{
+	char *string;
+
+	string = (char *)malloc(sizeof(char) * (i + 1));
+	if (string == NULL)
+		return (NULL);
+	string[i] = '\0';
+	if (sign == -1)
+		string[0] = '-';
+	return (string);
+}
 
 int		ft_count(int value, int base)
 {
@@ -21,7 +34,13 @@ int		ft_count(int value, int base)
 	i = 0;
 	if (value < 0 && base == 10)
 		i++;
-	tmp = (unsigned int)value;
+	if (base != 10)
+		tmp = (unsigned int)value;
+	if (base == 10 && value < 0)
+	{
+		value *= -1;
+		tmp = value;
+	}
 	while (tmp > 0)
 	{
 		i++;
@@ -40,11 +59,13 @@ char	*itoa_base(int value, int base)
 	sign = 0;
 	i = ft_count(value, base);
 	if (value < 0 && base == 10)
+	{
 		sign = -1;
-	tmp = (unsigned int)value;
-	string = (char *)malloc(sizeof(char) * (i + 1));
-	string[i] = '\0';
-	tmp = (unsigned int)value;
+		tmp = value * (-1);
+	}
+	if (base != 10)
+		tmp = (unsigned int)value;
+	string = ft_string(sign, i);
 	while (i-- + sign)
 	{
 		if (tmp % base < 10)
@@ -53,8 +74,6 @@ char	*itoa_base(int value, int base)
 			string[i] = tmp % base + 'a' - 10;
 		tmp /= base;
 	}
-	if (sign == -1)
-		string[0] = '-';
 	return (string);
 }
 
