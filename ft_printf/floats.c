@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/27 16:06:20 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/27 16:10:15 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,26 +119,15 @@ char		*ft_inttobin(long mantissa)
 	if (!(mant = (char *)malloc(sizeof(char) * (53))))
 		return (NULL);
 	mant[52] = '\0';
-	i = 0;
-	while (i <= 51)
+	i = 51;
+	while (i >= 0)
 	{
 		mant[i] = (mantissa % 2) + '0';
 		mantissa /= 2;
-		i++;
+		i--;
 	}
 	printf ("mantissa array is %s\n", mant);
-	if (!(reverse = (char *)malloc(sizeof(char) * (53))))
-		return (NULL);
-	reverse[52] = '\0';
-	k = 0;
-	printf ("i is %d\n", i);
-	while (k <= 51)
-	{
-		reverse[k] = mant[i];
-		i--;
-		k++;
-	}
-	printf ("reverse mantissa array is %s\n", mant);
+
 	return (mant);
 }
 
