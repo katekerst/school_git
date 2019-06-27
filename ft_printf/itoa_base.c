@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/23 12:07:18 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/23 14:12:07 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,16 @@ char	*itoa_base(int value, int base)
 	return (string);
 }
 
-int		main(void)
-{
-	int				i;
-	char			*string;
-	int				base;
+// int		main(void)
+// {
+// 	int				i;
+// 	char			*string;
+// 	int				base;
 
-	i = 812323;
-	base = 10;
-	string = itoa_base(i, base);
-	printf("itoa_base is %s\n", string);
-	printf("printf is %d", i);
-	return (0);
-}
+// 	i = -812323;
+// 	base = 10;
+// 	string = itoa_base(i, base);
+// 	printf("itoa_base is %s\n", string);
+// 	printf("printf is %d", i);
+// 	return (0);
+// }
