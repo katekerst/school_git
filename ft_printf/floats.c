@@ -6,17 +6,42 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/30 15:55:18 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:17:16 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 
 char	*itoa_base(int value, int base);
+
+void	ft_round(char **string, double n, int *i)
+{
+	char	*copy;
+	int		j;
+
+	j = 0;
+	copy = *string;
+	if ((int)n >= 5)
+	{
+		if (copy[*i - 1] == '9')
+		{
+			(*i)--;
+			while (copy[*i] == '9')
+			{
+				(*i)--;
+				j++;
+			}
+			copy[*i] += 1;
+			(*i)++;
+			while (j-- > 0)
+				copy[(*i)++] = '0';
+		}
+		else
+			copy[*i - 1] += 1;
+	}
+}
 
 void	ft_right_part(char **string, double n, int *i, int precision)
 {
@@ -35,27 +60,26 @@ void	ft_right_part(char **string, double n, int *i, int precision)
 		n = (n - temp) * 10;
 		(*i)++;
 	}
-	j = 0;
-	printf ("before rounding - %s\n", copy);
-	if ((int)n >= 5)
-	{
-		write(1, "1\n", 2);
-		if (copy[*i - 1] == '9')
-		{
-			(*i)--;
-			while (copy[*i] == '9')
-			{
-				(*i)--;
-				j++;
-			}
-			copy[*i] += 1;
-			(*i)++;
-			while (j-- > 0)
-				copy[(*i)++] = '0';
-		}
-		else
-			copy[*i - 1] += 1;
-	}
+	ft_round(&copy, n, i);
+	// j = 0;
+	// // if ((int)n >= 5)
+	// // {
+	// // 	if (copy[*i - 1] == '9')
+	// // 	{
+	// // 		(*i)--;
+	// // 		while (copy[*i] == '9')
+	// // 		{
+	// // 			(*i)--;
+	// // 			j++;
+	// // 		}
+	// // 		copy[*i] += 1;
+	// // 		(*i)++;
+	// // 		while (j-- > 0)
+	// // 			copy[(*i)++] = '0';
+	// // 	}
+	// // 	else
+	// // 		copy[*i - 1] += 1;
+	// // }
 }
 
 void	ft_left_part(char **string, double *n, int *i, double decs)
@@ -116,6 +140,14 @@ char		*ft_play_with_floats(double n, int precision)
 	return (string);
 }
 
+double	ft_pow(double n, int pow)
+{
+	if (pow)
+		return (n * ft_pow(n, pow - 1));
+	else
+		return (1);
+}
+
 int	main (void)
 {
 	int		prec;
@@ -124,17 +156,18 @@ int	main (void)
 	char	*string;
 	char	*string2;
 	char	*flag;
-	double n = 2346.34633425555;
+	double n = 2346.34633;
+	long double n1 = 2346.34633;
 	double result;
-	double result2;
 
 	int sign = *(uint64_t *)&n >> 63;
 	int exponent = (*(uint64_t *)&n << 1 >> 53) - 1023;
 	long mantissa = *(uint64_t *)&n << 12 >> 12;
-	result = pow(-1, sign) * (1 + mantissa/pow(2, 52)) * pow(2, exponent);
-	str = ft_play_with_floats(result, 0);
+	result = ft_pow(-1, sign) * (1 + mantissa/ft_pow(2, 52)) * ft_pow(2, exponent);
+	str = ft_play_with_floats(result, 8);
 	printf ("myprin is %s\n", str);
-	printf ("result is %.0f\n", n);
+	printf ("result is %.8f\n", n);
+	printf ("lonres is %.8Lf\n", n1);
 	// if (flag == 'L')
 	// 	new_arg = (long double)args;
 	// ft_print_double(str, width);
