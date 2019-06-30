@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/30 16:17:16 by siolive          ###   ########.fr       */
+/*   Updated: 2019/06/30 16:24:19 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 char	*itoa_base(int value, int base);
 
-void	ft_round(char **string, double n, int *i)
+void	ft_round(char **string, long double n, int *i)
 {
 	char	*copy;
 	int		j;
@@ -43,7 +43,7 @@ void	ft_round(char **string, double n, int *i)
 	}
 }
 
-void	ft_right_part(char **string, double n, int *i, int precision)
+void	ft_right_part(char **string, long double n, int *i, int precision)
 {
 	int		j;
 	int		temp;
@@ -82,7 +82,7 @@ void	ft_right_part(char **string, double n, int *i, int precision)
 	// // }
 }
 
-void	ft_left_part(char **string, double *n, int *i, double decs)
+void	ft_left_part(char **string, long double *n, int *i, double decs)
 {
 	char *copy;
 	int temp;
@@ -111,7 +111,7 @@ double		dec_count(double n, int *i)
 	return (decs);
 }
 
-char		*ft_play_with_floats(double n, int precision)
+char		*ft_play_with_floats(long double n, int precision)
 {
 	int		tmp;
 	char	*string;
@@ -160,14 +160,14 @@ int	main (void)
 	long double n1 = 2346.34633;
 	double result;
 
-	int sign = *(uint64_t *)&n >> 63;
-	int exponent = (*(uint64_t *)&n << 1 >> 53) - 1023;
-	long mantissa = *(uint64_t *)&n << 12 >> 12;
-	result = ft_pow(-1, sign) * (1 + mantissa/ft_pow(2, 52)) * ft_pow(2, exponent);
-	str = ft_play_with_floats(result, 8);
+	//int sign = *(uint64_t *)&n >> 63;
+	//int exponent = (*(uint64_t *)&n << 1 >> 53) - 1023;
+	//long mantissa = *(uint64_t *)&n << 12 >> 12;
+	//result = ft_pow(-1, sign) * (1 + mantissa/ft_pow(2, 52)) * ft_pow(2, exponent);
+	str = ft_play_with_floats(n, 15);
 	printf ("myprin is %s\n", str);
-	printf ("result is %.8f\n", n);
-	printf ("lonres is %.8Lf\n", n1);
+	printf ("result is %.15f\n", n);
+	printf ("lonres is %.15Lf\n", n1);
 	// if (flag == 'L')
 	// 	new_arg = (long double)args;
 	// ft_print_double(str, width);
