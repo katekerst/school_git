@@ -5,28 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/23 14:12:07 by siolive          ###   ########.fr       */
+/*   Created: 2019/07/02 11:18:24 by siolive           #+#    #+#             */
+/*   Updated: 2019/07/02 12:11:07 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "libprint.h"
 
-char	*ft_string(int sign, int i)
-{
-	char *string;
-
-	string = (char *)malloc(sizeof(char) * (i + 1));
-	if (string == NULL)
-		return (NULL);
-	string[i] = '\0';
-	if (sign == -1)
-		string[0] = '-';
-	return (string);
-}
-
-int		ft_count(int value, int base)
+unsigned int		ft_count(int value, int base)
 {
 	int				i;
 	unsigned int	tmp;
@@ -52,7 +40,7 @@ char	*itoa_base(int value, int base)
 {
 	char			*string;
 	int				sign;
-	int				i;
+	unsigned int	i;
 	unsigned int	tmp;
 
 	sign = 0;
@@ -83,10 +71,10 @@ char	*itoa_base(int value, int base)
 // 	char			*string;
 // 	int				base;
 
-// 	i = -812323;
-// 	base = 10;
+// 	i = 812323;
+// 	base = 8;
 // 	string = itoa_base(i, base);
 // 	printf("itoa_base is %s\n", string);
-// 	printf("printf is %d", i);
+// 	printf("printf is %o\n", i);
 // 	return (0);
 // }

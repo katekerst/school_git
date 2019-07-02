@@ -6,15 +6,11 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/06/30 16:24:19 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/02 14:44:27 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
-char	*itoa_base(int value, int base);
+#include "libprint.h"
 
 void	ft_round(char **string, long double n, int *i)
 {
@@ -61,64 +57,48 @@ void	ft_right_part(char **string, long double n, int *i, int precision)
 		(*i)++;
 	}
 	ft_round(&copy, n, i);
-	// j = 0;
-	// // if ((int)n >= 5)
-	// // {
-	// // 	if (copy[*i - 1] == '9')
-	// // 	{
-	// // 		(*i)--;
-	// // 		while (copy[*i] == '9')
-	// // 		{
-	// // 			(*i)--;
-	// // 			j++;
-	// // 		}
-	// // 		copy[*i] += 1;
-	// // 		(*i)++;
-	// // 		while (j-- > 0)
-	// // 			copy[(*i)++] = '0';
-	// // 	}
-	// // 	else
-	// // 		copy[*i - 1] += 1;
-	// // }
 }
 
-void	ft_left_part(char **string, long double *n, int *i, double decs)
+void	ft_left_part(char **string, long double *n, int *i, long double decs)
 {
 	char *copy;
-	int temp;
+	long double temp;
 
 	copy = *string;
-	while ((int)(*n) != 0)
+	while ((long long)decs != 0)
 	{
-		copy[(*i)++] = (char)((*n)/decs) + 48;
-		temp = (int)(*n / decs) * decs;
+        copy[(*i)++] = (char)((*n)/decs) + 48;
+		temp = ((copy[*i - 1] - 48) * decs);
 		*n -= temp;
 		decs /= 10;
 	}
 }
 
-double		dec_count(double n, int *i)
+long double    dec_count(long double n, int *i)
 {
-	double decs;
+	long double decs;
 
 	decs = 1;
-	while ((int)(n/10) != 0)
+	while ((int)n/10 != 0)
 	{
-		decs *= 10;
+        decs *= 10;
 		(*i)++;
 		n /= 10;
 	}
 	return (decs);
 }
 
-char		*ft_play_with_floats(long double n, int precision)
+char		*play_with_floats(va_list args, t_option *options)
 {
-	int		tmp;
 	char	*string;
 	int 	i;
 	int 	sign;
-	double	decs;
+	long double 	decs;
+    long double n;
 
+    if (!options->a_have_dot && !options->a_star)
+        options->a_dec = 6;
+    n = va_arg(args, long double);
 	i = 0;
 	sign = 0;
 	if (n < 0)
@@ -128,48 +108,44 @@ char		*ft_play_with_floats(long double n, int precision)
 		n *= -1;
 	}
 	decs = dec_count(n, &i);
-	if ((string = (char *)malloc(sizeof(char) * (i + precision + 1))) == NULL)
-		return (NULL);	
+	if ((string = (char *)malloc(sizeof(char) * (i + options->a_dec + 1))) == NULL)
+		return (NULL);
 	i = 0;
 	if (sign == 1)
 		string[i++] = '-';
 	ft_left_part(&string, &n, &i, decs);
-	if (precision != 0)
-		ft_right_part(&string, n, &i, precision);
+	if (options->a_dec != 0)
+		ft_right_part(&string, n, &i, options->a_dec);
 	string[i] = '\0';
 	return (string);
 }
 
-double	ft_pow(double n, int pow)
+void	ft_print_nan(void)
 {
-	if (pow)
-		return (n * ft_pow(n, pow - 1));
-	else
-		return (1);
+	ft_putstr("NaN");
 }
 
-int	main (void)
+void	ft_print_inf(void)
 {
-	int		prec;
-	int		width;
-	char	*str;
-	char	*string;
-	char	*string2;
-	char	*flag;
-	double n = 2346.34633;
-	long double n1 = 2346.34633;
-	double result;
+	ft_putstr("INF");
+}
 
-	//int sign = *(uint64_t *)&n >> 63;
-	//int exponent = (*(uint64_t *)&n << 1 >> 53) - 1023;
-	//long mantissa = *(uint64_t *)&n << 12 >> 12;
-	//result = ft_pow(-1, sign) * (1 + mantissa/ft_pow(2, 52)) * ft_pow(2, exponent);
-	str = ft_play_with_floats(n, 15);
-	printf ("myprin is %s\n", str);
-	printf ("result is %.15f\n", n);
-	printf ("lonres is %.15Lf\n", n1);
-	// if (flag == 'L')
-	// 	new_arg = (long double)args;
-	// ft_print_double(str, width);
+int		ft_check_double(long double n)
+{
+	double NAN = 0.0/0.0;
+	double POS_INF = 1.0 /0.0;
+	double NEG_INF = -1.0/0.0;
+
+	if (n == NAN)
+	{
+		ft_print_nan();
+		return (1);
+	}
+	if (n == POS_INF || n == NEG_INF)
+	{
+		ft_print_inf();
+		return (1);
+	}
 	return (0);
+
 }
