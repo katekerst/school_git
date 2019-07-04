@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:37:34 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:30:18 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/04 13:49:11 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void			play_with_string(va_list args, t_option *options);
 void			play_with_promile(t_option *options);
 void			play_with_char(va_list args, t_option *options);
 void			play_with_pointer(va_list args, t_option *options);
+char			*play_with_d_flags(va_list args, t_option *options, char **out);
+char			*play_with_h_flags(va_list args, t_option *options, char **out);
+char			*play_with_o_flags(va_list args, t_option *options, char **out);
 int				have_flag(char *pointer);
 int				w_dec_clac(char *buff, int i);
 char			*lets_play(va_list args, char *pointer, t_option *options);
@@ -75,6 +78,7 @@ unsigned int	ft_count_long(long long value, int base);
 char			*itoa_base(int value, int base);
 char			*itoa_base_long(long long value, int base);
 char			*itoa_unsigned(unsigned long long value);
+char			*itoa_short(short value);
 
 t_option		*clear_option(t_option *options);
 t_option		*change_options(t_option *options, char *buff, va_list args);

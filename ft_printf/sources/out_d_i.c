@@ -6,21 +6,45 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:26:25 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:44:30 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/04 12:43:17 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-void	play_with_decemal(va_list args, t_option *options) // transform in + - ' ' n 0n *
+char	*play_with_d_flags(va_list args, t_option *options, char **out)
 {
 	int				res;
+	char			*copy;
+
+	copy = *out;
+	if (options->m_ll == TRUE || options->m_l == TRUE)
+		copy = itoa_base_long(va_arg(args, long long int), 10);
+	else
+	{
+		res = va_arg(args, int);
+		if (options->m_hh == TRUE || options->m_h == TRUE)
+		{
+			if (options->m_h == TRUE)
+				res = (short)res;
+			else
+				res = (short)((signed char)res);
+		}
+		copy = ft_itoa(res);
+	}
+	return (copy);
+}
+
+void	play_with_decemal(va_list args, t_option *options) // transform in + - ' ' n 0n *
+{
 	char			*out;
 
-	res = va_arg(args, int);
-	out = ft_itoa(res);
-	// if(options->f_hash)
-	// 	flag_ne_tot();
+	// if (va_arg(args, long long int) == 0)
+	// {	
+	// 	ft_putchar('0');
+	// 	return ;
+	// }
+	out = play_with_d_flags(args, options, &out);
 	if (options->f_plus)
 		if(out[0] != '-')
 			out = ft_strjoin("+", out); //может  течь

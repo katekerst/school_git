@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 11:18:24 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/02 12:11:07 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/04 13:46:56 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ unsigned int		ft_count(int value, int base)
 	return (i);
 }
 
-char	*itoa_base(int value, int base)
+char				*itoa_base(int value, int base)
 {
 	char			*string;
 	int				sign;
@@ -44,12 +44,14 @@ char	*itoa_base(int value, int base)
 	unsigned int	tmp;
 
 	sign = 0;
+	if (value == 0)
+		return ("0");
 	i = ft_count(value, base);
 	if (value < 0 && base == 10)
 	{
-		sign = -1;
+		i++;
+		sign = 1;
 		value *= -1;
-		tmp = value;
 	}
 	else
 		tmp = (unsigned int)value;
@@ -64,17 +66,3 @@ char	*itoa_base(int value, int base)
 	}
 	return (string);
 }
-
-// int		main(void)
-// {
-// 	int				i;
-// 	char			*string;
-// 	int				base;
-
-// 	i = 812323;
-// 	base = 8;
-// 	string = itoa_base(i, base);
-// 	printf("itoa_base is %s\n", string);
-// 	printf("printf is %o\n", i);
-// 	return (0);
-// }

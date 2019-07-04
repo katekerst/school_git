@@ -6,14 +6,13 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:39:49 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:59:16 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/04 12:49:40 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "libprint.h"
+#include "libprint.h"
 #include <stdio.h>
-
-
+#include <limits.h>
 
 char *print_memory(void *addr, size_t size) // Нужно вкурить функцию
 {
@@ -59,7 +58,7 @@ int main(void)
 {
 // long tab = 2555555555565;
 // int d = 123456;
-char *s = "hello World";
+// char *s = "hello World";
 // long double n = -12345678901234567901234567890.1;
 // int n2 = 1234556;
 // long double n3 = 21231235.653454565;
@@ -68,6 +67,8 @@ char *s = "hello World";
 // long double n6 = 2745675.634565;
 // ft_strchr("Hello World", 'W');
 // ft_printf("\n%+-20.f", n2);
-printf   ("% Z%s", s);
-		return 0;
+int result1 = ft_printf("%hho, %hho\n", 0, 297);
+int result2 = printf("%hho, %hho\n", 0, 297);
+printf("my is %d, norm is - %d\n", result1, result2);
+return 0;
 }

@@ -5,19 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 13:50:10 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:44:28 by siolive          ###   ########.fr       */
+/*   Created: 2019/07/04 13:25:08 by siolive           #+#    #+#             */
+/*   Updated: 2019/07/04 13:26:50 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
-#include <stdio.h>
-
 
 char	*str_char_in(const int i, const char c)
 {
-	char	*str;
-	int j;
+	char		*str;
+	int 		j;
 
  	j = 0;
 	str = ft_strnew(i);
@@ -29,7 +27,7 @@ char	*str_char_in(const int i, const char c)
 	return (str);
 }
 
-void	play_with_conversation(va_list args, char *pointer, t_option *options)	// must to expand
+void	play_with_conversation(va_list args, char *pointer, t_option *options)
 {
 	if (*pointer == 'd')
 		play_with_decemal(args, options);
@@ -55,7 +53,7 @@ void	play_with_conversation(va_list args, char *pointer, t_option *options)	// m
 		trans_float(play_with_floats(args, options), options);
 }
 
-int		have_conversion(char *pointer) // must to expand
+int		have_conversion(char *pointer)
 {
 	if (*pointer == 'd' || *pointer == 'i' || *pointer == 'o'
             || *pointer == 'u' || *pointer == 'x' || *pointer =='X'
@@ -66,15 +64,14 @@ int		have_conversion(char *pointer) // must to expand
 		return (0);
 }
 
-
 char	*lets_play(va_list args, char *pointer, t_option *options)
 {
-	int		i;
-	char	*buff;
+	int			i;
+	char		*buff;
 
 	i = 0;
 	buff = (char *)ft_memalloc(BUFF_SIZE * sizeof(char));
-	options = clear_option(options); //сделано чтоб компилятор не жаловался на некоторое время
+	options = clear_option(options);
 	while (!have_conversion(pointer))
 	{
 		buff[i] = *pointer;
@@ -83,10 +80,9 @@ char	*lets_play(va_list args, char *pointer, t_option *options)
 	}
 	options = change_options(options, buff, args);
 	ft_strdel(&buff);
-	// print_options(options); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (have_conversion(pointer))
 		{
-			play_with_conversation(args, pointer, options); // options!
+			play_with_conversation(args, pointer, options); 
 			pointer++;
 		}
 	return (pointer);
@@ -94,22 +90,21 @@ char	*lets_play(va_list args, char *pointer, t_option *options)
 
 int		ft_printf(char *string, ...)
 {
-	char    *pointer;
-	char	*work_string;
-	va_list	args;
+	char    	*pointer;
+	char		*work_string;
+	va_list		args;
 	t_option	*options = NULL;
 
 	options = make_options(0);
 	work_string = ft_strdup(string);
 	va_start(args, string);
 	pointer = work_string;
-
 	while(*pointer != '\0')
 	{
 		if(*pointer == '%')
 			{
 				pointer++;
-				pointer = lets_play(args, pointer, options);///////////
+				pointer = lets_play(args, pointer, options);
 			}
 		else
 		{

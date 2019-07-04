@@ -6,7 +6,7 @@
 #    By: siolive <siolive@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/13 16:08:51 by gbellege          #+#    #+#              #
-#    Updated: 2019/07/02 14:17:59 by siolive          ###   ########.fr        #
+#    Updated: 2019/07/04 13:21:54 by siolive          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SOURCES = ft_printf.c\
 				itoa_base.c\
 				itoa_base_long.c\
 				floats.c\
+				floats1.c\
 				out_%_c.c\
 				out_d_i.c\
 				out_f.c\
