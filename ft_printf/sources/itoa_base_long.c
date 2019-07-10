@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/04 13:51:11 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:52:22 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ unsigned int		ft_count_long(long long value, int base)
 	unsigned long long	tmp;
 
 	i = 0;
+	if (value == 0)
+		return (1);
 	if (value < 0 && base == 10)
 		i++;
 	tmp = (unsigned long long)value;
@@ -85,8 +87,6 @@ char				*itoa_base_long(long long value, int base)
 	unsigned long long	tmp;
 
 	sign = 0;
-	if (value == 0)
-		return ("0");
 	i = ft_count_long(value, base);
 	if (value < 0 && base == 10)
 	{
