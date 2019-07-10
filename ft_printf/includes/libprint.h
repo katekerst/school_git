@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:37:34 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/04 13:49:11 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:32:28 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int				w_dec_clac(char *buff, int i);
 char			*lets_play(va_list args, char *pointer, t_option *options);
 
 int				ft_check_double(long double n);
+void			ft_round(char **string, long double n, int *i);
+long double		check_options(va_list args, t_option *options);
 void			ft_round(char **string, long double n, int *i);
 void			ft_right_part(char **string, long double n, int *i, int precision);
 void			ft_left_part(char **string, long double *n, int *i, long double decs);

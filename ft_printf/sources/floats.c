@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/04 13:47:19 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:34:27 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void		ft_right_part(char **string, long double n, int *i, int precision)
 		(*i)++;
 	}
 	ft_round(&copy, n, i);
+	copy[*i] = '\0';
 }
 
 void		ft_left_part(char **str, long double *n, int *i, long double decs)
@@ -96,9 +97,7 @@ char		*play_with_floats(va_list args, t_option *options)
 	long double	decs;
 	long double	n;
 
-	if (!options->a_have_dot && !options->a_star)
-		options->a_dec = 6;
-	n = va_arg(args, long double);
+	n = check_options(args, options);
 	i = 0;
 	sign = 0;
 	if (n < 0)
@@ -115,6 +114,5 @@ char		*play_with_floats(va_list args, t_option *options)
 	ft_left_part(&string, &n, &i, decs);
 	if (options->a_dec != 0)
 		ft_right_part(&string, n, &i, options->a_dec);
-	string[i] = '\0';
 	return (string);
 }

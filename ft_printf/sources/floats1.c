@@ -6,11 +6,24 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 13:19:56 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/04 13:47:24 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:34:24 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
+
+long double	check_options(va_list args, t_option *options)
+{
+	long double n;
+
+	if (!options->a_have_dot && !options->a_star)
+		options->a_dec = 6;
+	if (options->m_L == TRUE)
+		n = va_arg(args, long double);
+	else
+		n = va_arg(args, double);
+	return (n);
+}
 
 void		ft_print_nan(void)
 {

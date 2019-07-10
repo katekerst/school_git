@@ -6,17 +6,12 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:19:14 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:44:30 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:22:26 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
-
-
-
-
-
-
+#include <stdio.h>
 
 t_option		*clear_option(t_option *options)
 {
@@ -133,8 +128,6 @@ t_option	*change_options(t_option *options, char *buff, va_list args)
 			options->a_have_dot = TRUE;
             options->a_dec = 0;
 		}
-
-
 		else if (buff[i] == '.')
 		{
 			i++;
@@ -144,9 +137,8 @@ t_option	*change_options(t_option *options, char *buff, va_list args)
 					options->a_dec = options->a_dec * 10 + buff[i] - 48;
 					i++;
 				}
+			continue ;
 		}
-
-
         else if (buff[i] == 'h')
             {
                 if (buff[i+1] == 'h')
@@ -175,9 +167,6 @@ t_option	*change_options(t_option *options, char *buff, va_list args)
             }
         else if (buff[i] == 'L')
             options->m_L = TRUE;
-
-
-
 		// if(options->f_plus == TRUE && options->f_space == TRUE)
 		// 	flag_error();
 		// if(options->f_minus == TRUE && options->w_zero_dec == TRUE)
