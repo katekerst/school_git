@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:19:14 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/10 11:22:26 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 12:18:51 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,10 @@ t_option	*change_options(t_option *options, char *buff, va_list args)
 		// 	flag_error();
 		i++;
 	}
+    if(options->f_plus == TRUE && options->f_space == TRUE)
+			options->f_space = FALSE;
+    if(options->f_minus == TRUE && options->w_zero_dec == TRUE)
+			options->w_zero_dec = FALSE;
 	return (options);
 }
 

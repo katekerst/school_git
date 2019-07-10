@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 13:25:08 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/04 13:26:50 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/09 16:45:01 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	play_with_conversation(va_list args, char *pointer, t_option *options)
 	else if (*pointer == 'u')
 		play_with_unsigned_int(args, options);
 	else if (*pointer == 'x')
-		play_with_hex(args, options);
+		ft_putstr(play_with_hex(args, options));
 	else if (*pointer == 'X')
 		play_with_hex_big(args, options);
 	else if (*pointer == 's')
@@ -50,7 +50,22 @@ void	play_with_conversation(va_list args, char *pointer, t_option *options)
 	else if (*pointer == 'p')
 		play_with_pointer(args, options);
 	else if (*pointer == 'f')
+    {
+        ft_putendl("Voshla");
 		trans_float(play_with_floats(args, options), options);
+        ft_putendl("Vishla");
+    }
+}
+
+int     string_have_conversation(char *str)
+{
+    while(*str != '\0')
+    {
+        if(have_conversion(str) == 1)
+            return (1);
+        str++;
+    }
+    return (0);
 }
 
 int		have_conversion(char *pointer)
@@ -80,9 +95,10 @@ char	*lets_play(va_list args, char *pointer, t_option *options)
 	}
 	options = change_options(options, buff, args);
 	ft_strdel(&buff);
+    // print_options(options);
 	if (have_conversion(pointer))
 		{
-			play_with_conversation(args, pointer, options); 
+			play_with_conversation(args, pointer, options);
 			pointer++;
 		}
 	return (pointer);
@@ -103,8 +119,11 @@ int		ft_printf(char *string, ...)
 	{
 		if(*pointer == '%')
 			{
-				pointer++;
-				pointer = lets_play(args, pointer, options);
+                // if(string_have_conversation(pointer))
+				// {
+                    pointer++;
+				    pointer = lets_play(args, pointer, options);
+                // }
 			}
 		else
 		{

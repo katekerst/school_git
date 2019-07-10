@@ -6,53 +6,13 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 13:39:49 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/10 11:38:07 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 12:18:50 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprint.h"
+#include "includes/libprint.h"
 #include <stdio.h>
 #include <limits.h>
-
-char *print_memory(void *addr, size_t size) // Нужно вкурить функцию
-{
-	size_t			i;
-	unsigned char	*pc;
-	char			*out;
-	int				g;
-
-	i = 0;
-	pc = (unsigned char *)addr;
-	out = ft_strnew(size);
-	while (i++ < size)
-	{
-		g = (*(pc+i) >> 4) & 0xf;
-		g += g >= 10 ? 'a'-10 : '0';
-		*out = g;
-		out++;
-
-		g = *(pc+i) & 0xf;
-		g += g >= 10 ? 'a'-10 : '0';
-		*out = g;
-		out++;
-	}
-
-	// for (i=0; i<(size); ++i)
-	// {
-	// 	g = (*(pc+i) >> 4) & 0xf;
-	// 	g += g >= 10 ? 'a'-10 : '0';
-	// 	*out = g;
-	// 	out++;
-
-	// 	g = *(pc+i) & 0xf;
-	// 	g += g >= 10 ? 'a'-10 : '0';
-	// 	*out = g;
-	// 	out++;
-	// }
-	out = out - (size*2);
-	// ft_putstr(out);
-	return (out);
-}
 
 int main(void)
 {

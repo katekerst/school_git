@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 13:37:34 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/10 11:32:28 by siolive          ###   ########.fr       */
+/*   Created: 2019/07/10 12:17:16 by siolive           #+#    #+#             */
+/*   Updated: 2019/07/10 12:17:18 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "libft.h"
 #include <stdarg.h>
-# define BUFF_SIZE 32
+# define BUFF_SIZE 64
 
 typedef struct s_option
 {
@@ -45,7 +45,7 @@ void			play_with_int(va_list args);
 void			play_with_conversation(va_list args, char *pointer, t_option *options);
 void			play_with_oct(va_list args, t_option *options);
 void			play_with_unsigned_int(va_list args, t_option *options);
-void			play_with_hex(va_list args, t_option *options);
+char			*play_with_hex(va_list args, t_option *options);
 void			play_with_hex_big(va_list args, t_option *options);
 void			play_with_string(va_list args, t_option *options);
 void			play_with_promile(t_option *options);
@@ -55,6 +55,8 @@ char			*play_with_d_flags(va_list args, t_option *options, char **out);
 char			*play_with_h_flags(va_list args, t_option *options, char **out);
 char			*play_with_o_flags(va_list args, t_option *options, char **out);
 int				have_flag(char *pointer);
+int				string_have_conversation(char *str);
+int				have_conversion(char *pointer);
 int				w_dec_clac(char *buff, int i);
 char			*lets_play(va_list args, char *pointer, t_option *options);
 

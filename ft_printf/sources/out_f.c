@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   out_f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:32:41 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/02 14:33:09 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/09 14:53:27 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void    trans_float(char const *outp, t_option *options)
 {
     char *out;
 
+    ft_putendl("Voshla2.0");
     out = ft_strsub(outp, 0, ft_strlen(outp));
 	if (options->f_plus)
 		if(out[0] != '-')

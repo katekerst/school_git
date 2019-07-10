@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:29:24 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/04 11:57:21 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 11:58:01 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void	play_with_string(va_list args, t_option *options)
 	res = va_arg(args, char*);
 	if (res == NULL)
 	{
-		out = "(null)";
-		ft_putstr(out);
-		options->count += ft_strlen(out);
+		ft_putstr("(null)");
+		options->count += ft_strlen("(null)");
 		return ;
 	}
 	out = res;
-	if(options->a_dec || options->a_have_dot)
+	if (options->a_dec || options->a_have_dot)
 	{
 		out = ft_strnew(options->a_dec);
 		while (++i < options->a_dec)

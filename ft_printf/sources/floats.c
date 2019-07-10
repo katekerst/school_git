@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/10 11:34:27 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/10 12:18:00 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ long double	dec_count(long double n, int *i)
 	decs = 1;
 	while ((int)n / 10 != 0)
 	{
-		decs *= 10;
+        decs *= 10;
 		(*i)++;
 		n /= 10;
 	}
+
 	return (decs);
 }
 
@@ -106,12 +107,16 @@ char		*play_with_floats(va_list args, t_option *options)
 		sign = 1;
 		n *= -1;
 	}
+
 	decs = dec_count(n, &i);
+
 	string = (char *)ft_memalloc(i + options->a_dec + 1);
 	i = 0;
 	if (sign == 1)
 		string[i++] = '-';
+
 	ft_left_part(&string, &n, &i, decs);
+
 	if (options->a_dec != 0)
 		ft_right_part(&string, n, &i, options->a_dec);
 	return (string);

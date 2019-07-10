@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   out_o.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:27:13 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/04 13:04:30 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/09 17:46:40 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,23 @@ void	play_with_oct(va_list args, t_option *options)
 	char			*out;
 
 	out = play_with_o_flags(args, options, &out);
-	if(options->f_hash)
+	if(options->a_have_dot && options->a_dec == 0 && out [0] == '0')
+        {
+            free(out);
+            out = ft_strnew(2);
+        }
+
+    if (options->a_have_dot && options->a_dec > 0)
+    {
+        out = ft_strjoin(str_char_in((options->a_dec - ft_strlen(out)), '0'), out);
+    }
+
+    if(options->f_hash)
 		out = ft_strjoin("0", out);
+
 	if (options->f_minus)
 		out = ft_strjoin(out, str_char_in(options->w_dec - ft_strlen(out), ' '));
-	else if(options->w_zero_dec)
+	else if(options->w_zero_dec && !(options->a_have_dot))
 		out = ft_strjoin(str_char_in((options->w_dec - ft_strlen(out)), '0'), out);
 	else
 		out = ft_strjoin(str_char_in((options->w_dec - ft_strlen(out)), ' '), out);
