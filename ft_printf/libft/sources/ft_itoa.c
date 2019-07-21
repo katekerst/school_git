@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 13:21:33 by gbellege          #+#    #+#             */
-/*   Updated: 2019/04/26 12:39:12 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/15 17:00:25 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char					*ft_itoa(int n)
 
 	i = rang_bang(n);
 	nb = n;
-	str = (char *)malloc((i + 1) * sizeof(char));
+	str = (char *)ft_memalloc((i + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	str[i] = '\0';

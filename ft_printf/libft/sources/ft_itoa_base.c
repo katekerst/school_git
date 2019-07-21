@@ -6,13 +6,13 @@
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 17:33:21 by gbellege          #+#    #+#             */
-/*   Updated: 2019/06/26 18:54:29 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/10 17:56:10 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	    set(int nbr)
+static char		set(int nbr)
 {
 	if (nbr >= 10)
 		return ('a' - 10 + nbr);
@@ -24,7 +24,7 @@ static char	    set(int nbr)
 
 static int		numlen(long long nbr, int base)
 {
-	int     	len;
+	int			len;
 
 	len = 0;
 	if (!nbr)
@@ -37,7 +37,7 @@ static int		numlen(long long nbr, int base)
 	return (len);
 }
 
-char			*ft_itoa_base(long long nbr, int base) // do minus
+char			*ft_itoa_base(long long nbr, int base)
 {
 	char		*str;
 	long long	stand;

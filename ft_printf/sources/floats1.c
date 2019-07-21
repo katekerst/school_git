@@ -3,43 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   floats1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 13:19:56 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/10 11:34:24 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/13 14:41:52 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-long double	check_options(va_list args, t_option *options)
+void			finish(void)
+{
+	ft_putstr("EOF");
+	exit(0);
+}
+
+long double		check_opt(va_list args, t_option *opt)
 {
 	long double n;
 
-	if (!options->a_have_dot && !options->a_star)
-		options->a_dec = 6;
-	if (options->m_L == TRUE)
+	if (!opt->a_have_dot && !opt->a_star)
+		opt->a_dec = 6;
+	if (opt->m_big_l == TRUE)
 		n = va_arg(args, long double);
 	else
 		n = va_arg(args, double);
 	return (n);
 }
 
-void		ft_print_nan(void)
+void			ft_print_nan(void)
 {
 	ft_putstr("NaN");
 }
 
-void		ft_print_inf(void)
+void			ft_print_inf(void)
 {
 	ft_putstr("INF");
 }
 
-int			ft_check_double(long double n)
+int				ft_check_double(long double n)
 {
-	double nan;
-	double pos_inf;
-	double neg_inf;
+	double		nan;
+	double		pos_inf;
+	double		neg_inf;
 
 	nan = 0.0 / 0.0;
 	pos_inf = 1.0 / 0.0;

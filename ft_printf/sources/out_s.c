@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   out_s.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:29:24 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/10 11:58:01 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/20 18:45:24 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-void	play_with_string(va_list args, t_option *options)
+void	play_with_string(va_list args, t_option *opt)
 {
 	char	*res;
-	char	*out;
 	int		i;
 
 	i = -1;
@@ -23,20 +22,20 @@ void	play_with_string(va_list args, t_option *options)
 	if (res == NULL)
 	{
 		ft_putstr("(null)");
-		options->count += ft_strlen("(null)");
+		opt->count += ft_strlen("(null)");
 		return ;
 	}
-	out = res;
-	if (options->a_dec || options->a_have_dot)
+	tsr(opt->out, res);
+	if (opt->a_dec || opt->a_have_dot)
 	{
-		out = ft_strnew(options->a_dec);
-		while (++i < options->a_dec)
-			out[i] = res[i];
+		ft_bzero((opt->out), OUT_SIZE);
+		while (++i < opt->a_dec)
+			opt->out[i] = res[i];
 	}
-	if (options->f_minus)
-		out = ft_strjoin(out, str_char_in(options->w_dec - ft_strlen(out), ' '));
+	if (opt->f_minus)
+		tsraf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
 	else
-		out = ft_strjoin(str_char_in((options->w_dec - ft_strlen(out)), ' '), out);
-	options->count += ft_strlen(out);
-	ft_putstr(out);
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	opt->count += ft_strlen(opt->out);
+	ft_putstr(opt->out);
 }

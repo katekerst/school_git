@@ -5,34 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/01 17:32:41 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/09 14:53:27 by gbellege         ###   ########.fr       */
+/*   Created: 2019/07/20 18:13:24 by gbellege          #+#    #+#             */
+/*   Updated: 2019/07/20 18:45:10 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-void    trans_float(char const *outp, t_option *options)
+void	trans_float(char *outp, t_option *opt)
 {
-    char *out;
-
-    ft_putendl("Voshla2.0");
-    out = ft_strsub(outp, 0, ft_strlen(outp));
-	if (options->f_plus)
-		if(out[0] != '-')
-			out = ft_strjoin("+", out); //может  течь
-	if (options->f_space)
-		if(out[0] != '-')
-			out = ft_strjoin(" ", out);
-    if (options->f_hash && options->a_dec == 0)
-        out = ft_strjoin(out, ".");
-	if (options->f_minus)
-		out = ft_strjoin(out, str_char_in(options->w_dec - ft_strlen(out), ' '));
-    else if(options->w_zero_dec)
-		out = ft_strjoin(str_char_in((options->w_dec - ft_strlen(out)), '0'), out);
-    else
-		out = ft_strjoin(str_char_in((options->w_dec - ft_strlen(out)), ' '), out);
-    options->count += ft_strlen(out);
-		ft_putstr(out);
-		ft_memdel((void**)&out);
+	tsr(opt->out, outp);
+	if (opt->f_plus)
+		if (opt->out[0] != '-')
+			tsl(opt->out, "+");
+	if (opt->f_space)
+		if (opt->out[0] != '-')
+			tsl(opt->out, " ");
+	if (opt->f_hash && opt->a_dec == 0)
+		tsl(opt->out, ".");
+	if (opt->f_minus)
+		tsraf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	else if (opt->w_zero_dec)
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), '0'));
+	else
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	opt->count += ft_strlen(opt->out);
+	ft_putstr(opt->out);
 }

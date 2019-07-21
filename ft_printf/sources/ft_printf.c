@@ -3,135 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/04 13:25:08 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/09 16:45:01 by gbellege         ###   ########.fr       */
+/*   Created: 2019/07/15 13:06:14 by siolive           #+#    #+#             */
+/*   Updated: 2019/07/21 13:09:27 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-char	*str_char_in(const int i, const char c)
-{
-	char		*str;
-	int 		j;
-
- 	j = 0;
-	str = ft_strnew(i);
-  	while (j < i)
-	  {
-			str[j] = c;
-			j++;
-	  }
-	return (str);
-}
-
-void	play_with_conversation(va_list args, char *pointer, t_option *options)
+void	play_with_conversation(va_list args, char *pointer, t_option *opt)
 {
 	if (*pointer == 'd')
-		play_with_decemal(args, options);
+		play_with_decemal(args, opt);
 	else if (*pointer == 'i')
-		play_with_decemal(args, options);
+		play_with_decemal(args, opt);
 	else if (*pointer == 'o')
-		play_with_oct(args, options);
+		play_with_oct(args, opt);
 	else if (*pointer == 'u')
-		play_with_unsigned_int(args, options);
+		play_with_unsigned_int(args, opt);
 	else if (*pointer == 'x')
-		ft_putstr(play_with_hex(args, options));
+		play_with_hex(args, opt);
 	else if (*pointer == 'X')
-		play_with_hex_big(args, options);
+		play_with_hex_big(args, opt);
 	else if (*pointer == 's')
-		play_with_string(args, options);
+		play_with_string(args, opt);
 	else if (*pointer == 'c')
-		play_with_char(args, options);
+		play_with_char(args, opt);
 	else if (*pointer == '%')
-		play_with_promile(options);
+		play_with_promile(opt);
 	else if (*pointer == 'p')
-		play_with_pointer(args, options);
+		play_with_pointer(args, opt);
 	else if (*pointer == 'f')
-    {
-        ft_putendl("Voshla");
-		trans_float(play_with_floats(args, options), options);
-        ft_putendl("Vishla");
-    }
+		play_with_floats(args, opt);
+	else if (*pointer == '\0')
+		ft_putchar('\n');
 }
 
-int     string_have_conversation(char *str)
-{
-    while(*str != '\0')
-    {
-        if(have_conversion(str) == 1)
-            return (1);
-        str++;
-    }
-    return (0);
-}
-
-int		have_conversion(char *pointer)
-{
-	if (*pointer == 'd' || *pointer == 'i' || *pointer == 'o'
-            || *pointer == 'u' || *pointer == 'x' || *pointer =='X'
-            || *pointer == 's' || *pointer == 'c' || *pointer == '%'
-            || *pointer == 'p' || *pointer == 'f')
-		return (1);
-	else
-		return (0);
-}
-
-char	*lets_play(va_list args, char *pointer, t_option *options)
+char	*lets_play(va_list args, char *pointer, t_option *opt)
 {
 	int			i;
 	char		*buff;
 
 	i = 0;
-	buff = (char *)ft_memalloc(BUFF_SIZE * sizeof(char));
-	options = clear_option(options);
+	buff = ft_strnew(BUFF_SIZE);
+	opt = clear_option(opt);
 	while (!have_conversion(pointer))
 	{
 		buff[i] = *pointer;
 		i++;
 		pointer++;
 	}
-	options = change_options(options, buff, args);
+	opt = change_opt(opt, buff, 0, 0);
 	ft_strdel(&buff);
-    // print_options(options);
 	if (have_conversion(pointer))
-		{
-			play_with_conversation(args, pointer, options);
-			pointer++;
-		}
+	{
+		play_with_conversation(args, pointer, opt);
+		pointer++;
+	}
 	return (pointer);
 }
 
-int		ft_printf(char *string, ...)
+void	ft_move_point(char *pointer, va_list args, t_option *opt)
 {
-	char    	*pointer;
-	char		*work_string;
-	va_list		args;
-	t_option	*options = NULL;
-
-	options = make_options(0);
-	work_string = ft_strdup(string);
-	va_start(args, string);
-	pointer = work_string;
-	while(*pointer != '\0')
+	while (*pointer != '\0')
 	{
-		if(*pointer == '%')
+		if (*pointer == '%')
+		{
+			pointer++;
+			if (*pointer == '\0')
 			{
-                // if(string_have_conversation(pointer))
-				// {
-                    pointer++;
-				    pointer = lets_play(args, pointer, options);
-                // }
+				ft_putchar(*pointer);
+				return ;
 			}
+			pointer = lets_play(args, pointer, opt);
+		}
 		else
 		{
 			ft_putchar(*pointer);
 			pointer++;
-			options->count++;
+			opt->count++;
 		}
 	}
+}
+
+int		ft_printf(char *string, ...)
+{
+	char		*pointer;
+	char		*work_string;
+	va_list		args;
+	t_option	*opt;
+
+	opt = NULL;
+	opt = make_opt(0);
+	work_string = ft_strdup(string);
+	va_start(args, string);
+	pointer = work_string;
+	ft_move_point(pointer, args, opt);
 	va_end(args);
-	return (options->count);
+	free(work_string);
+	free(opt);
+	return (opt->count);
 }

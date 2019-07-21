@@ -1,63 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   out_%_c.c                                          :+:      :+:    :+:   */
+/*   out_per_c.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:30:40 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/10 11:55:55 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/20 19:04:19 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
 
-void	play_with_char(va_list args, t_option *options)
+void	play_with_char(va_list args, t_option *opt)
 {
 	char	res;
-	char	*out;
 
 	res = va_arg(args, int);
 	if (res == 0)
 	{
-		if (options->w_dec != 0)
-			options->count += options->w_dec;
+		if (opt->w_dec != 0)
+			opt->count += opt->w_dec;
 		else
-			options->count += 1;
-		while (options->w_dec-- > 1)
+			opt->count += 1;
+		while (opt->w_dec-- > 1)
 			ft_putchar(' ');
 		ft_putchar(res);
 		return ;
 	}
-	out = ft_strnew(2);
-	*out = res;
-	if (options->f_minus)
-		out = ft_strjoin(out, str_char_in(options->w_dec
-		- ft_strlen(out), ' '));
+	opt->out[0] = res;
+	if (opt->f_minus)
+		tsraf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
 	else
-		out = ft_strjoin(str_char_in((options->w_dec
-		- ft_strlen(out)), ' '), out);
-	options->count += ft_strlen(out);
-	ft_putstr(out);
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	opt->count += ft_strlen(opt->out);
+	ft_putstr(opt->out);
 }
 
-void	play_with_promile(t_option *options)
+void	play_with_promile(t_option *opt)
 {
-	char	res;
-	char	*out;
-
-	res = '%';
-	out = ft_strnew(2);
-	*out = res;
-	if (options->f_minus)
-		out = ft_strjoin(out, str_char_in(options->w_dec
-		- ft_strlen(out), ' '));
-	else if (options->w_zero_dec)
-		out = ft_strjoin(str_char_in((options->w_dec
-		- ft_strlen(out)), '0'), out);
+	tsr(opt->out, "%");
+	if (opt->f_minus)
+		tsraf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	else if (opt->w_zero_dec)
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), '0'));
 	else
-		out = ft_strjoin(str_char_in((options->w_dec
-		- ft_strlen(out)), ' '), out);
-	options->count += ft_strlen(out);
-	ft_putstr(out);
+		tslaf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
+	opt->count += ft_strlen(opt->out);
+	ft_putstr(opt->out);
 }

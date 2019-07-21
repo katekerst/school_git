@@ -6,13 +6,19 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 13:02:40 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/10 11:52:22 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/17 12:25:17 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include "libprint.h"
+#include <stdio.h>
+
+void				ft_zero(char **string)
+{
+	*string = ft_string(0, 1);
+	*string[0] = '0';
+}
 
 char				*itoa_unsigned(unsigned long long value)
 {
@@ -20,8 +26,12 @@ char				*itoa_unsigned(unsigned long long value)
 	unsigned int		i;
 	unsigned long long	tmp;
 
+	string = NULL;
 	if (value == 0)
-		return ("0");
+	{
+		ft_zero(&string);
+		return (string);
+	}
 	i = 0;
 	tmp = value;
 	while (tmp > 0)
@@ -30,10 +40,7 @@ char				*itoa_unsigned(unsigned long long value)
 		tmp /= 10;
 	}
 	tmp = value;
-	string = (char *)malloc(sizeof(char) * (i + 1));
-	if (string == NULL)
-		return (NULL);
-	string[i] = '\0';
+	string = ft_string(0, i);
 	while (i--)
 	{
 		string[i] = (unsigned int)(tmp % 10) + 48;
@@ -46,7 +53,7 @@ char				*ft_string(int sign, unsigned int i)
 {
 	char				*string;
 
-	string = (char *)malloc(sizeof(char) * (i + 1));
+	string = (char *)ft_memalloc(i + 1);
 	if (string == NULL)
 		return (NULL);
 	string[i] = '\0';
