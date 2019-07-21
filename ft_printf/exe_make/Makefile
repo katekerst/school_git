@@ -6,11 +6,9 @@
 #    By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/10 12:16:12 by siolive           #+#    #+#              #
-#    Updated: 2019/07/20 19:09:52 by gbellege         ###   ########.fr        #
+#    Updated: 2019/07/21 13:59:33 by siolive          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#addprefix(наш необходимый префикс например (INC_DIR) , дальше папка с хедерами (INCLUDES)
 
 NAME = libftprintf.a
 
@@ -49,7 +47,7 @@ OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
-#  COLORS Добавим немного красок в нашу ничтожную жизнь
+#COLORS
 
 BLACK = \033[0;30m
 RED = \033[0;31m
@@ -69,7 +67,6 @@ all: $(NAME) $(OBJECTS_DIRECTORY)
 $(NAME): $(LIBFT)
 	@echo "$(NAME): $(CYAN)try to gcc libft $(RESET)"
 	@cd $(LIBFT_DIR) && $(MAKE)
-	@echo "$(NAME):$(PURPLE)Даешь русский язык! и Да, я плохо знаю английский, ждите ошибки в словах$(RESET)"
 	@$(COMPILER)  -o $(NAME) main.c $(SOURCE) $(LIBFT_CONNECT)
 
 $(OBJECTS_DIRECTORY):
@@ -84,14 +81,9 @@ $(LIBFT):
 	@echo "$(NAME):try to gcc libft"
 	@cd $(LIBFT_DIR) && $(MAKE)
 
-
-
 clean:
 	@cd $(LIBFT_DIR) && $(MAKE) clean
 	@rm -rf $(OBJECTS_DIRECTORY)
-
-fun:
-	@echo "$(NAME):$(GREEN)Смешно, да? А вот мне нет!$(RESET)"
 
 fclean: clean
 	@cd $(LIBFT_DIR) && $(MAKE) fclean
@@ -107,6 +99,5 @@ leaks:
 	@make re
 	@echo "\n"
 	@valgrind ./$(NAME) | grep lost
-	# @valgrind --leak-check=full ./$(NAME)
 
 re: fclean all
