@@ -6,7 +6,7 @@
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:28:48 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 18:45:13 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:06:47 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void				play_with_hex(va_list args, t_option *opt)
 		ft_bzero((opt->out), OUT_SIZE);
 	if (opt->a_have_dot && opt->a_dec > 0)
 		tslaf(opt->out, msos((opt->a_dec - ft_strlen(opt->out)), '0'));
-	if (opt->w_zero_dec && opt->f_hash)
+	if (opt->w_zero_dec && opt->f_hash && !(opt->a_have_dot))
 		tslaf(opt->out, msos((opt->w_dec - ft_strlen(opt->out) - 2), '0'));
-	else if (opt->w_zero_dec)
+	else if (opt->w_zero_dec && !(opt->a_have_dot))
 		tslaf(opt->out, msos((opt->w_dec - ft_strlen(opt->out)), '0'));
 	if (opt->f_hash)
 		tsl(opt->out, "0x");
@@ -75,9 +75,9 @@ void				play_with_hex_big(va_list args, t_option *opt)
 		ft_bzero((opt->out), OUT_SIZE);
 	if (opt->a_have_dot && opt->a_dec > 0)
 		tslaf(opt->out, msos((opt->a_dec - ft_strlen(opt->out)), '0'));
-	if (opt->w_zero_dec && opt->f_hash)
+	if (opt->w_zero_dec && opt->f_hash && !(opt->a_have_dot))
 		tslaf(opt->out, msos((opt->w_dec - ft_strlen(opt->out) - 2), '0'));
-	else if (opt->w_zero_dec)
+	else if (opt->w_zero_dec && !(opt->a_have_dot))
 		tslaf(opt->out, msos((opt->w_dec - ft_strlen(opt->out)), '0'));
 	if (opt->f_hash)
 		tsl(opt->out, "0x");

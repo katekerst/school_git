@@ -6,7 +6,7 @@
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:27:13 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 19:10:52 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:06:50 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ void				play_with_oct(va_list args, t_option *opt)
 	if (opt->a_have_dot && opt->a_dec > 0)
 	{
 		tslaf(opt->out, msos((opt->a_dec - ft_strlen(opt->out)), '0'));
-		opt->f_hash = 0;
 	}
-	if (opt->f_hash && opt->is_positive)
+	if (opt->f_hash && opt->is_positive && (ft_strlen(opt->out) > opt->a_dec))
 		tsl(opt->out, "0");
 	if (opt->f_minus)
 		tsraf(opt->out, msos((opt->w_dec - ft_strlen(opt->out)), ' '));

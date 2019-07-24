@@ -6,7 +6,7 @@
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:29:24 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 18:45:24 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/21 19:01:15 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ void	play_with_string(va_list args, t_option *opt)
 	i = -1;
 	res = va_arg(args, char*);
 	if (res == NULL)
-	{
-		ft_putstr("(null)");
-		opt->count += ft_strlen("(null)");
-		return ;
-	}
+		res = "(null)";
 	tsr(opt->out, res);
 	if (opt->a_dec || opt->a_have_dot)
 	{

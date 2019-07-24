@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_magic.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 19:02:01 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 19:05:14 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/24 12:01:40 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		tsl(char *out_str, char *source)
 {
 	int		i;
 	int		j;
+	char	*start;
 
 	if (source)
 	{

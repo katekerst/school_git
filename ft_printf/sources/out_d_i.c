@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   out_d_i.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 17:26:25 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 19:04:06 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/24 12:33:22 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@ char			*msos(int len, char sym)
 {
 	char		*str;
 	int			i;
+	char		*start;
 
 	if (len <= 0)
 		return (NULL);
 	str = ft_strnew(len);
 	i = 0;
+	start = str;
 	while (i < len)
 	{
-		str[i] = sym;
+		*(str++) = sym;
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	*str = '\0';
+	return (start);
 }
 
 void			play_with_decemal_ftn(t_option *opt)

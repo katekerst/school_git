@@ -6,7 +6,7 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:06:14 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/21 13:09:27 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/24 12:30:01 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*lets_play(va_list args, char *pointer, t_option *opt)
 	return (pointer);
 }
 
-void	ft_move_point(char *pointer, va_list args, t_option *opt)
+void	ft_move_point(char *pointer, va_list args, t_option *opt, int *i)
 {
 	while (*pointer != '\0')
 	{
@@ -85,23 +85,21 @@ void	ft_move_point(char *pointer, va_list args, t_option *opt)
 			opt->count++;
 		}
 	}
+	(*i) += opt->count;
 }
 
 int		ft_printf(char *string, ...)
 {
-	char		*pointer;
-	char		*work_string;
 	va_list		args;
 	t_option	*opt;
+	int			i;
 
+	i = 0;
 	opt = NULL;
 	opt = make_opt(0);
-	work_string = ft_strdup(string);
 	va_start(args, string);
-	pointer = work_string;
-	ft_move_point(pointer, args, opt);
+	ft_move_point(string, args, opt, &i);
 	va_end(args);
-	free(work_string);
 	free(opt);
-	return (opt->count);
+	return (i);
 }

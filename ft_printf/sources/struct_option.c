@@ -6,7 +6,7 @@
 /*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 13:19:14 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/13 14:48:20 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:06:01 by gbellege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_option	*change_opt_third(t_option *opt, char *buff, int *i, int *qt)
 
 static t_option	*change_opt_sec(t_option *opt, char *buff, int *i, int *qt)
 {
-	if (buff[*i] == 'h')
+	if (buff[(*i)] == 'h')
 	{
 		if (buff[*i + 1] == 'h')
 		{
@@ -114,7 +114,7 @@ t_option		*change_opt(t_option *opt, char *buff, int i, int qt)
 	{
 		if ((opt = change_opt_first(opt, buff, &i, &qt)) && qt != 0)
 			qt = 0;
-		else if (buff[i] >= '1' && buff[i] <= '9' && !opt->w_star)
+		if (buff[i] >= '1' && buff[i] <= '9' && !opt->w_star)
 		{
 			while ((buff[i] >= '0' && buff[i] <= '9'))
 			{
@@ -124,9 +124,9 @@ t_option		*change_opt(t_option *opt, char *buff, int i, int qt)
 			if (buff[i] == '.')
 				continue;
 		}
-		else if ((opt = change_opt_fourth(opt, buff, &i, &qt)) && qt != 0)
+		if ((opt = change_opt_fourth(opt, buff, &i, &qt)) && qt != 0)
 			qt = 0;
-		else if ((opt = change_opt_sec(opt, buff, &i, &qt)) && qt != 0)
+		if ((opt = change_opt_sec(opt, buff, &i, &qt)) && qt != 0)
 			qt = 0;
 		i++;
 	}

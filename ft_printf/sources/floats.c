@@ -6,13 +6,60 @@
 /*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 14:05:02 by siolive           #+#    #+#             */
-/*   Updated: 2019/07/15 14:07:36 by siolive          ###   ########.fr       */
+/*   Updated: 2019/07/24 12:16:22 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
+#include <stdio.h>
 
-void		ft_round(char **string, long double n, int *i)
+static void		ft_round3(char **string, int *i, int j)
+{
+	int			k;
+	int			tmp;
+	char		*copy;
+
+	copy = *string;
+	k = *i;
+	while (copy[*i] != '.' && copy[*i])
+		(*i)++;
+	tmp = copy[*i];
+	copy[*i] = copy[*i + 1];
+	copy[*i + 1] = tmp;
+	*i = k;
+	while (j-- > 0)
+	{
+		if (copy[*i] == '.')
+		{
+			(*i)++;
+			continue ;
+		}
+		copy[(*i)++] = '0';
+	}
+}
+
+static void		ft_round2(char **string, int *i, int j)
+{
+	char		*copy;
+
+	copy = *string;
+	while ((copy[*i] == '9' || copy[*i] == '.') && *i >= 0)
+	{
+		(*i)--;
+		j++;
+	}
+	if (*i == -1)
+	{
+		*i = 0;
+		copy[*i] = '1';
+	}
+	else
+		copy[*i] += 1;
+	(*i)++;
+	ft_round3(&copy, i, j);
+}
+
+void			ft_round(char **string, long double n, int *i)
 {
 	char		*copy;
 	int			j;
@@ -24,22 +71,15 @@ void		ft_round(char **string, long double n, int *i)
 		if (copy[*i - 1] == '9')
 		{
 			(*i)--;
-			while (copy[*i] == '9')
-			{
-				(*i)--;
-				j++;
-			}
-			copy[*i] += 1;
-			(*i)++;
-			while (j-- > 0)
-				copy[(*i)++] = '0';
+			ft_round2(&copy, i, j);
 		}
 		else
-			copy[*i - 1] += 1;
+			copy[*i - 1]++;
 	}
 }
 
-void		ft_right_part(char **string, long double n, int *i, int precision)
+void			ft_right_part(char **string, long double n,
+	int *i, int precision)
 {
 	int			j;
 	int			temp;
@@ -48,7 +88,8 @@ void		ft_right_part(char **string, long double n, int *i, int precision)
 	j = 0;
 	n *= 10;
 	copy = *string;
-	copy[(*i)++] = '.';
+	if (precision >= 1)
+		copy[(*i)++] = '.';
 	while (j++ < precision)
 	{
 		temp = (int)n;
@@ -60,7 +101,8 @@ void		ft_right_part(char **string, long double n, int *i, int precision)
 	copy[*i] = '\0';
 }
 
-void		ft_left_part(char **str, long double *n, int *i, long double decs)
+void			ft_left_part(char **str, long double *n,
+	int *i, long double decs)
 {
 	char		*copy;
 	long double temp;
@@ -73,47 +115,4 @@ void		ft_left_part(char **str, long double *n, int *i, long double decs)
 		*n -= temp;
 		decs /= 10;
 	}
-}
-
-long double	dec_count(long double n, int *i)
-{
-	long double decs;
-
-	decs = 1;
-	while ((int)n / 10 != 0)
-	{
-		decs *= 10;
-		(*i)++;
-		n /= 10;
-	}
-	return (decs);
-}
-
-void		play_with_floats(va_list args, t_option *opt)
-{
-	char		*string;
-	int			i;
-	int			sign;
-	long double	decs;
-	long double	n;
-
-	n = check_opt(args, opt);
-	i = 0;
-	sign = 0;
-	if (n < 0)
-	{
-		i++;
-		sign = 1;
-		n *= -1;
-	}
-	decs = dec_count(n, &i);
-	string = (char *)ft_memalloc(i + opt->a_dec + 1);
-	i = 0;
-	if (sign == 1)
-		string[i++] = '-';
-	ft_left_part(&string, &n, &i, decs);
-	if (opt->a_dec != 0)
-		ft_right_part(&string, n, &i, opt->a_dec);
-	trans_float(string, opt);
-	ft_memdel((void **)&string);
 }

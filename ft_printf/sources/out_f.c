@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   out_f.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbellege <gbellege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: siolive <siolive@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 18:13:24 by gbellege          #+#    #+#             */
-/*   Updated: 2019/07/20 18:45:10 by gbellege         ###   ########.fr       */
+/*   Updated: 2019/07/24 12:18:50 by siolive          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprint.h"
+#include <stdio.h>
 
 void	trans_float(char *outp, t_option *opt)
 {
@@ -22,7 +23,7 @@ void	trans_float(char *outp, t_option *opt)
 		if (opt->out[0] != '-')
 			tsl(opt->out, " ");
 	if (opt->f_hash && opt->a_dec == 0)
-		tsl(opt->out, ".");
+		tsr(opt->out, ".");
 	if (opt->f_minus)
 		tsraf(opt->out, msos(opt->w_dec - ft_strlen(opt->out), ' '));
 	else if (opt->w_zero_dec)
