@@ -6,7 +6,7 @@
 #    By: siolive <siolive@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/25 13:40:50 by siolive           #+#    #+#              #
-#    Updated: 2019/07/25 15:14:06 by siolive          ###   ########.fr        #
+#    Updated: 2019/07/28 14:45:35 by siolive          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIB.A = libft.a
 
 SRC_PATH = sources
 
-CH_SRC_NAME = checker/main.c
+CH_SRC_NAME = checker/main.c checker/helpers.c checker/functions.c
 
 NAME_C = checker
 
